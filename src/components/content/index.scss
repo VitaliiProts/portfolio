@@ -1,0 +1,34 @@
+#portfolio-header {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.portfolio-header-content {
+  margin: auto;
+  text-align: center;
+  .logo {
+    width: 200px;
+    height: 200px;
+  }
+  > h1 {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 13px;
+  }
+  > span {
+    letter-spacing: 6px;
+    font-size: 1.5em;
+  }
+}
+
+#portfolio-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.portfolio-footer-content {
+  text-align: center;
+}

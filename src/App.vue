@@ -1,30 +1,31 @@
 <template>
-  <div id="app">
-    <Header />
-    <Footer />
-  </div>
+  <Content />
 </template>
 
 <script>
-import Header from './components/header/Header.vue';
-import Footer from './components/footer/Footer.vue';
+import Content from './components/content/Content.vue';
 
 export default {
-  name: 'app',
-  components: {
-    Header,
-    Footer
-  }
+  components: { Content }
 }
+
 </script>
 
 <style lang="scss">
-body {
+body, html {
+  font-family: "Helvetica", "Arial", sans-serif;
   background-color: #000;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   color: #fff;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 </style>
