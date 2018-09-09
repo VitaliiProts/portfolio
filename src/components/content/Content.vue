@@ -1,5 +1,5 @@
 <template>
-<section style="height:100%; height: 100%;">
+<section style="height:100%">
   <header id='portfolio-header'>
     <div class="portfolio-header-content">
       <img class="logo" src="../../assets/vpicon.png" alt="logo">
