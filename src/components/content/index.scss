@@ -30,5 +30,9 @@
 }
 
 .portfolio-footer-content {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  > li {
+    margin-right: 16px;
+  }
 }
