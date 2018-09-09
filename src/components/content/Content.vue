@@ -11,7 +11,7 @@
     <ul class="portfolio-footer-content">
       <li v-for='(item, key) in items' :key='key'>
         <a :href="item.herf" target="_blank">
-          <img :src="item.icon" alt="linkedin" style="width: 24px; height: 28px;">
+          <img :src="item.icon" :alt="item.alt">
         </a>
       </li>
     </ul>
