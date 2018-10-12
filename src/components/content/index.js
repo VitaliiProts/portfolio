@@ -1,29 +1,37 @@
+import instagram from '../../assets/instagram-brands.svg';
+import linkedin from '../../assets/linkedin-in-brands.svg';
+import twitter from '../../assets/twitter-brands.svg';
+import envelope from '../../assets/envelope-regular.svg';
+import github from '../../assets/github-brands.svg';
+
+
+
 export default {
   data() {
     return {
       items: [
         {
-          icon: '../../../dist/github-brands.svg',
+          icon: github,
           herf: 'https://github.com/VitaliiProts',
           alt: 'github'
         },
         {
-          icon: '../../../dist/linkedin-in-brands.svg',
+          icon: linkedin,
           herf: 'https://www.linkedin.com/in/vitalii-prots-495376131',
           alt: 'linkedin',
         },
         {
-          icon: '../../../dist/instagram-brands.svg',
+          icon: instagram,
           herf: 'https://www.instagram.com/vprots_/',
           alt: 'instagram'
         },
         {
-          icon: '../../../dist/twitter-brands.svg',
+          icon: twitter,
           herf: 'https://twitter.com/VitaliyProts',
           alt: 'twitter'
         },
         {
-          icon: '../../../dist/envelope-regular.svg',
+          icon: envelope,
           herf: 'mailto:vitalikprocj@gmail.com',
           alt: 'mail'
         },
