@@ -1,0 +1,151 @@
+.about {
+  background: var(--cream);
+  padding: 110px 0 0;
+  overflow: hidden;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.photos {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.photos > :nth-child(2) {
+  width: 86%;
+  margin-left: auto;
+}
+
+.title {
+  margin-bottom: 26px;
+}
+
+.sub {
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.body {
+  margin-bottom: 20px;
+  max-width: 36em;
+}
+
+.creds {
+  list-style: none;
+  margin: 28px 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 36em;
+}
+
+.creds li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 16px;
+}
+
+.creds li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--clay);
+}
+
+.creds b {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.feats {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 44px;
+}
+
+.feat {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.feat svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--clay);
+  fill: none;
+  stroke-width: 1.2;
+  margin-top: 4px;
+}
+
+.feat h3 {
+  font-size: 25px;
+  margin-bottom: 4px;
+}
+
+.feat p {
+  font-size: 16px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+  padding: 84px 0 96px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat dt {
+  display: block;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(46px, 5vw, 70px);
+  color: var(--clay);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat dd {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 44px 24px;
+    padding: 64px 0 76px;
+  }
+}
+
+@media (max-width: 560px) {
+  .about {
+    padding-top: 76px;
+  }
+}

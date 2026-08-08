@@ -1,0 +1,50 @@
+import { plans } from '@/lib/content';
+import { formatPrice } from '@/lib/site';
+import styles from './Pricing.module.css';
+
+export function Pricing() {
+  return (
+    <section className={styles.pricing} id="pricing" aria-labelledby="pricing-title">
+      <div className="wrap">
+        <div className={styles.head}>
+          <p className="eyebrow">Сесії та оплата</p>
+          <h2 id="pricing-title">
+            Прозорі ціни<span className="dot">.</span>
+          </h2>
+          <p className="lead">
+            Без прихованих платежів. Оплата мінімум за 24 години до консультації. Скасування пізніше
+            — без повернення коштів.
+          </p>
+        </div>
+
+        <div className={styles.grid}>
+          {plans.map((plan) => (
+            <div
+              key={plan.id}
+              className={`${styles.plan} ${plan.featured ? styles.featured : ''}`}
+            >
+              <span className={styles.tag}>{plan.tag}</span>
+              <h3>{plan.title}</h3>
+              <p className={styles.amount}>
+                {formatPrice(plan.price)} <small>{plan.unit}</small>
+              </p>
+              <ul>
+                {plan.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+              <a
+                href={plan.href}
+                className={`btn ${plan.featured ? 'btn-fill' : 'btn-line'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Записатися
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

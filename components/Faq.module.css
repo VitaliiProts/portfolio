@@ -1,0 +1,27 @@
+.steps {
+  background: var(--cream);
+  padding: 110px 0 120px;
+}
+
+.head {
+  margin-bottom: 56px;
+  max-width: 44em;
+}
+
+.list {
+  max-width: 900px;
+}
+
+.list :global(.acc summary) {
+  font-size: 24px;
+}
+
+@media (max-width: 560px) {
+  .steps {
+    padding: 76px 0 84px;
+  }
+
+  .list :global(.acc summary) {
+    font-size: 22px;
+  }
+}

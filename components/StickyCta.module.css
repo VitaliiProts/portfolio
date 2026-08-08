@@ -1,0 +1,27 @@
+.sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  display: none;
+  gap: 10px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(250, 241, 235, 0.96);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 24px rgba(23, 24, 26, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.sticky :global(.btn) {
+  flex: 1;
+  justify-content: center;
+  padding: 14px 18px;
+  font-size: 15px;
+}
+
+@media (max-width: 1100px) {
+  .sticky {
+    display: flex;
+  }
+}

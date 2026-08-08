@@ -1,0 +1,154 @@
+.contact {
+  padding: 110px 0 120px;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 36px;
+}
+
+.infoRow {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.infoRow svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--clay);
+  fill: none;
+  stroke-width: 1.3;
+  margin-top: 3px;
+}
+
+.infoRow b {
+  display: block;
+  font-weight: 400;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.infoRow span {
+  font-size: 16px;
+}
+
+.actions {
+  margin-top: 28px;
+}
+
+/* --- форма --------------------------------------------------------------- */
+
+.form {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--clay);
+  outline: none;
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--clay-dark);
+}
+
+.error {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--clay-dark);
+}
+
+.submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.note {
+  font-size: 14px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.note a {
+  color: var(--clay-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sent:not(:empty) {
+  background: var(--cream-deep);
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 16px;
+  color: var(--ink);
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact {
+    padding: 76px 0 84px;
+  }
+
+  .form {
+    padding: 28px 22px;
+  }
+}

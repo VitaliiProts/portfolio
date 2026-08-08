@@ -1,0 +1,40 @@
+.reach {
+  padding: 110px 0 120px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.lead {
+  margin-bottom: 44px;
+}
+
+.actions {
+  margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .inner :global(.photo) {
+    order: -1;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .reach {
+    padding: 76px 0 84px;
+  }
+}

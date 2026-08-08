@@ -1,0 +1,12 @@
+.notFound {
+  background: var(--cream);
+  padding: 120px 0;
+}
+
+.inner {
+  text-align: center;
+}
+
+.lead {
+  margin: 24px auto 32px;
+}
