@@ -1,6 +1,8 @@
 'use client';
 
 import { useId, useState, type FormEvent } from 'react';
+import { trackTelegramClick } from '@/lib/analytics';
+import { attributionSuffix } from '@/lib/attribution';
 import { contactSubjects } from '@/lib/content';
 import { telegramLink } from '@/lib/site';
 import styles from './Contact.module.css';
@@ -39,7 +41,8 @@ export function BookingForm() {
       .join('\n');
 
     setSent(true);
-    window.open(telegramLink(text), '_blank', 'noopener,noreferrer');
+    trackTelegramClick('form');
+    window.open(telegramLink(text + attributionSuffix()), '_blank', 'noopener,noreferrer');
   }
 
   return (

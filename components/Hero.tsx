@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { heroProof } from '@/lib/content';
 import { bookingLink } from '@/lib/site';
+import { TelegramLink } from './TelegramLink';
 import styles from './Hero.module.css';
 
 export function Hero() {
@@ -37,9 +38,9 @@ export function Hero() {
           </ul>
 
           <div className="btns">
-            <a href={bookingLink} className="btn btn-fill" target="_blank" rel="noopener noreferrer">
+            <TelegramLink href={bookingLink} source="hero" className="btn btn-fill">
               Написати в Telegram
-            </a>
+            </TelegramLink>
             <a href="#pricing" className="btn btn-line">
               Дивитися ціни
             </a>

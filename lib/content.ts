@@ -1,3 +1,4 @@
+import type { TelegramCtaSource } from './analytics';
 import { formatPrice, prices, telegramLink } from './site';
 
 export type NavItem = { href: string; label: string };
@@ -362,6 +363,7 @@ export type Plan = {
   unit: string;
   bullets: readonly string[];
   href: string;
+  ctaSource: TelegramCtaSource;
   featured?: boolean;
 };
 
@@ -379,6 +381,7 @@ export const plans: readonly Plan[] = [
       'Підтримка між складними етапами',
     ],
     href: telegramLink('Хочу записатися на індивідуальну сесію'),
+    ctaSource: 'pricing_individual',
   },
   {
     id: 'eating-disorder',
@@ -393,6 +396,7 @@ export const plans: readonly Plan[] = [
       'За потреби — координація з лікарем',
     ],
     href: telegramLink('Хочу записатися на терапію РХП'),
+    ctaSource: 'pricing_eating_disorder',
     featured: true,
   },
   {
@@ -408,6 +412,7 @@ export const plans: readonly Plan[] = [
       'Підтримка підлітка в кризових періодах',
     ],
     href: telegramLink('Хочу записатися на парну сесію з батьками'),
+    ctaSource: 'pricing_teen_pair',
   },
 ];
 

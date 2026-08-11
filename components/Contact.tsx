@@ -1,6 +1,7 @@
 import { formatPrice, prices, site, bookingLink } from '@/lib/site';
 import { BookingForm } from './BookingForm';
 import { PhoneIcon, PinIcon, WalletIcon } from './icons';
+import { TelegramLink } from './TelegramLink';
 import styles from './Contact.module.css';
 
 export function Contact() {
@@ -24,9 +25,9 @@ export function Contact() {
               <PhoneIcon />
               <div>
                 <b>
-                  <a href={site.telegramUrl} target="_blank" rel="noopener noreferrer">
+                  <TelegramLink href={site.telegramUrl} source="contact">
                     @{site.telegramHandle}
-                  </a>
+                  </TelegramLink>
                 </b>
                 <span>Найшвидший спосіб записатися — Telegram</span>
               </div>
@@ -50,9 +51,9 @@ export function Contact() {
           </div>
 
           <div className={`btns ${styles.actions}`}>
-            <a href={bookingLink} className="btn btn-fill" target="_blank" rel="noopener noreferrer">
+            <TelegramLink href={bookingLink} source="contact" className="btn btn-fill">
               Відкрити Telegram <span className="arw">⟶</span>
-            </a>
+            </TelegramLink>
           </div>
         </div>
 
