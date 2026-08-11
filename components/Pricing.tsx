@@ -1,5 +1,6 @@
 import { plans } from '@/lib/content';
 import { formatPrice } from '@/lib/site';
+import { TelegramLink } from './TelegramLink';
 import styles from './Pricing.module.css';
 
 export function Pricing() {
@@ -33,14 +34,13 @@ export function Pricing() {
                   <li key={bullet}>{bullet}</li>
                 ))}
               </ul>
-              <a
+              <TelegramLink
                 href={plan.href}
+                source={plan.ctaSource}
                 className={`btn ${plan.featured ? 'btn-fill' : 'btn-line'}`}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 Записатися
-              </a>
+              </TelegramLink>
             </div>
           ))}
         </div>

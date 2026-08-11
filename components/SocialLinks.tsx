@@ -1,5 +1,6 @@
 import { site } from '@/lib/site';
 import { InstagramIcon, TelegramIcon } from './icons';
+import { TelegramLink } from './TelegramLink';
 
 export function SocialLinks({ className = 'social' }: { className?: string }) {
   return (
@@ -12,14 +13,13 @@ export function SocialLinks({ className = 'social' }: { className?: string }) {
       >
         <InstagramIcon />
       </a>
-      <a
+      <TelegramLink
         href={site.telegramUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+        source="social"
         aria-label={`Telegram @${site.telegramHandle}`}
       >
         <TelegramIcon />
-      </a>
+      </TelegramLink>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { Cormorant_Garamond, Jost } from 'next/font/google';
 import { Amplitude } from '@/components/Amplitude';
 import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
+import { GoogleTag } from '@/components/GoogleTag';
 import { Header } from '@/components/Header';
 import { JsonLd } from '@/components/JsonLd';
 import { StickyCta } from '@/components/StickyCta';
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CrisisBar />
         <JsonLd />
+        <GoogleTag />
         <Amplitude />
         <Analytics />
       </body>

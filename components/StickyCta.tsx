@@ -1,13 +1,14 @@
 import { bookingLink } from '@/lib/site';
+import { TelegramLink } from './TelegramLink';
 import styles from './StickyCta.module.css';
 
 /** Мобільна панель швидкого запису — головний драйвер конверсії на телефонах. */
 export function StickyCta() {
   return (
     <aside className={styles.sticky} aria-label="Швидкий запис">
-      <a className="btn btn-fill" href={bookingLink} target="_blank" rel="noopener noreferrer">
+      <TelegramLink className="btn btn-fill" href={bookingLink} source="sticky">
         Telegram
-      </a>
+      </TelegramLink>
       <a className="btn btn-line" href="#pricing">
         Ціни
       </a>

@@ -6,6 +6,7 @@ import { bookingLink } from '@/lib/site';
 import { BurgerIcon, CloseIcon } from './icons';
 import { Logo } from './Logo';
 import { SocialLinks } from './SocialLinks';
+import { TelegramLink } from './TelegramLink';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -55,14 +56,9 @@ export function Header() {
 
         <SocialLinks />
 
-        <a
-          className={styles.cta}
-          href={bookingLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <TelegramLink className={styles.cta} href={bookingLink} source="header">
           Записатися
-        </a>
+        </TelegramLink>
 
         <button
           type="button"
