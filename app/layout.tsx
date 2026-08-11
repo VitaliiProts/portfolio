@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { Cormorant_Garamond, Jost } from 'next/font/google';
 import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CrisisBar />
         <JsonLd />
+        <Analytics />
       </body>
     </html>
   );
