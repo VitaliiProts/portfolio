@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { Cormorant_Garamond, Jost } from 'next/font/google';
+import { Amplitude } from '@/components/Amplitude';
 import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
@@ -96,7 +97,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://t.me" />
         <link rel="dns-prefetch" href="https://www.instagram.com" />
       </head>
-      <body>
+      {/* Розширення браузера дописують атрибути до <body> до гідратації. */}
+      <body suppressHydrationWarning>
         <a className="skip-link" href="#main">
           Перейти до вмісту
         </a>
@@ -106,6 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CrisisBar />
         <JsonLd />
+        <Amplitude />
         <Analytics />
       </body>
     </html>
