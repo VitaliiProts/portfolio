@@ -1,3 +1,6 @@
+'use client';
+
+import { trackInstagramClick } from '@/lib/analytics';
 import { site } from '@/lib/site';
 import { InstagramIcon, TelegramIcon } from './icons';
 import { TelegramLink } from './TelegramLink';
@@ -10,6 +13,7 @@ export function SocialLinks({ className = 'social' }: { className?: string }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Instagram ${site.shortName}`}
+        onClick={() => trackInstagramClick()}
       >
         <InstagramIcon />
       </a>

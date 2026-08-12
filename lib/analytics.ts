@@ -1,9 +1,3 @@
-/**
- * Відстеження єдиної конверсії сайту — переходу в Telegram.
- * Форми з відправкою на сервер немає, тому клік по CTA і є цільовою дією
- * для Google Ads, GA4 та Amplitude.
- */
-
 import * as amplitude from '@amplitude/unified';
 import { prices } from './site';
 
@@ -13,12 +7,6 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
-
-/**
- * Кожна кнопка має власне джерело: у Google Ads конверсія лишається однією
- * (щоб не розмивати сигнал для Smart Bidding), а розбивку по кнопках дає
- * параметр cta_source у GA4 та Amplitude.
- */
 export type TelegramCtaSource =
   | 'hero'
   | 'header'
@@ -30,14 +18,16 @@ export type TelegramCtaSource =
   | 'pricing_eating_disorder'
   | 'pricing_teen_pair';
 
-export const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
-export const googleAdsConversionLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
-export const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
+function normalizeAdsId(value: string | undefined): string | undefined {
+  const id = value?.trim();
+  if (!id) return undefined;
+  return /^\d+$/.test(id) ? `AW-${id}` : id;
+}
 
-/**
- * Вартість конверсії для Google Ads. Це не оплачена сесія, а перехід у Telegram,
- * але однакове значення на всіх кнопках дозволяє алгоритму рахувати ROAS.
- */
+export const googleAdsId = normalizeAdsId(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
+export const googleAdsConversionLabel =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL?.trim() || undefined;
+export const ga4Id = process.env.NEXT_PUBLIC_GA4_ID?.trim() || undefined;
 const conversionValue = prices.individual;
 const conversionCurrency = 'UAH';
 
@@ -60,5 +50,11 @@ export function trackTelegramClick(source: TelegramCtaSource): void {
     });
   }
 
-  amplitude.track('Clicked Telegram CTA', { cta_source: source });
+  amplitude.track('Clicked Telegram CTA', { 'CTA Source': source });
+}
+
+export function trackInstagramClick(): void {
+  window.gtag?.('event', 'instagram_click');
+
+  amplitude.track('Clicked Instagram');
 }
