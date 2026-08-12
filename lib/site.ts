@@ -4,20 +4,27 @@
  */
 
 /**
- * Пріоритет: власний домен → адреса продакшн-деплою Vercel → запасне значення.
- * Завдяки другому кроку канонічні URL і Open Graph коректні ще до того,
- * як до проєкту прикрутили власний домен.
+ * Єдиний хост, який має бути в індексі Google. Решта адрес (www, прев'ю та
+ * службові домени Vercel) або редиректять сюди, або віддають X-Robots-Tag:
+ * noindex — див. next.config.ts.
  */
-const vercelUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL;
+export const canonicalHost = 'psykristel.com';
 
+/**
+ * Навмисно не підставляємо адресу деплою Vercel: canonical, sitemap і
+ * Open Graph мають вести на канонічний домен навіть із прев'ю-деплоя.
+ */
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (vercelUrl ? `https://${vercelUrl}` : '') ||
-  'https://psykristel.com'
+  process.env.NEXT_PUBLIC_SITE_URL || `https://${canonicalHost}`
 ).replace(/\/$/, '');
+
+/** Пошуковикам відкритий лише продакшн; прев'ю-деплої лишаються поза індексом. */
+export const isIndexable = (process.env.VERCEL_ENV ?? 'production') === 'production';
 
 export const site = {
   url: siteUrl,
+  canonicalHost,
+  isIndexable,
   name: 'Крістель Кравець — психолог з РХП',
   shortName: 'Крістель Кравець',
   role: 'Психолог · РХП',
