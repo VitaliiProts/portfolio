@@ -51,9 +51,14 @@ export const metadata: Metadata = {
   publisher: site.shortName,
   alternates: { canonical: '/' },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+    index: site.isIndexable,
+    follow: site.isIndexable,
+    googleBot: {
+      index: site.isIndexable,
+      follow: site.isIndexable,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
     type: 'website',
