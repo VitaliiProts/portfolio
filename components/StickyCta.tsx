@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { bookingLink } from '@/lib/site';
 import { TelegramLink } from './TelegramLink';
 import styles from './StickyCta.module.css';
@@ -9,9 +10,9 @@ export function StickyCta() {
       <TelegramLink className="btn btn-fill" href={bookingLink} source="sticky">
         Telegram
       </TelegramLink>
-      <a className="btn btn-line" href="#pricing">
+      <Link className="btn btn-line" href="/#pricing">
         Ціни
-      </a>
+      </Link>
     </aside>
   );
 }

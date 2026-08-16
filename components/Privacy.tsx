@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { site } from '@/lib/site';
 import styles from './Privacy.module.css';
 
@@ -19,6 +20,11 @@ export function Privacy() {
         <p className={styles.text}>
           Оплата — мінімум за 24 години до консультації. Скасування пізніше ніж за 24 години — без
           повернення коштів, бо час уже заброньований.
+        </p>
+        <p className={styles.text}>
+          Тести в розділі <Link href="/tests">«Тести»</Link> анонімні: відповіді рахуються у вашому
+          браузері, не зберігаються й нікуди не надсилаються. Це скринінгові опитувальники, а не
+          діагноз.
         </p>
         <p className={styles.text}>
           Якщо стан гострий і потрібна негайна допомога — лінія {site.crisisLine} (безкоштовно,

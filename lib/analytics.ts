@@ -16,7 +16,8 @@ export type TelegramCtaSource =
   | 'form'
   | 'pricing_individual'
   | 'pricing_eating_disorder'
-  | 'pricing_teen_pair';
+  | 'pricing_teen_pair'
+  | 'test_result';
 
 function normalizeAdsId(value: string | undefined): string | undefined {
   const id = value?.trim();
@@ -99,6 +100,20 @@ export function trackTelegramClick(source: TelegramCtaSource): void {
   });
 
   amplitude.track('Clicked Telegram CTA', { 'CTA Source': source });
+}
+
+export function trackTestStarted(slug: string): void {
+  window.gtag?.('event', 'test_started', { test: slug });
+  amplitude.track('Started Test', { Test: slug });
+}
+
+/**
+ * Відповіді не залишають браузер: у подію йде лише діапазон результату
+ * («помірний рівень»), а для багатошкальних тестів — діапазон кожної шкали.
+ */
+export function trackTestCompleted(slug: string, bands: Record<string, string>): void {
+  window.gtag?.('event', 'test_completed', { test: slug, ...bands });
+  amplitude.track('Completed Test', { Test: slug, ...bands });
 }
 
 export function trackInstagramClick(): void {

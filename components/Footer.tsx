@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { footerSections, footerTopics } from '@/lib/content';
 import { site } from '@/lib/site';
 import { Logo } from './Logo';
@@ -48,8 +49,8 @@ export function Footer() {
             © {year} {site.shortName}. Приватна практика.
           </span>
           <span>
-            <a href="#privacy">Конфіденційність і правила</a> · <a href="#pricing">Ціни</a> ·{' '}
-            <a href="#contact">Запис</a>
+            <Link href="/#privacy">Конфіденційність і правила</Link> ·{' '}
+            <Link href="/#pricing">Ціни</Link> · <Link href="/#contact">Запис</Link>
           </span>
         </div>
       </div>

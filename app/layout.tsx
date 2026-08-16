@@ -6,7 +6,6 @@ import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
 import { GoogleTag } from '@/components/GoogleTag';
 import { Header } from '@/components/Header';
-import { JsonLd } from '@/components/JsonLd';
 import { StickyCta } from '@/components/StickyCta';
 import { formatPrice, prices, site } from '@/lib/site';
 import './globals.css';
@@ -113,7 +112,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StickyCta />
         <Footer />
         <CrisisBar />
-        <JsonLd />
         <GoogleTag />
         <Amplitude />
         <Analytics />
