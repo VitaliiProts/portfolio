@@ -7,7 +7,7 @@ import styles from './StickyCta.module.css';
 export function StickyCta() {
   return (
     <aside className={styles.sticky} aria-label="Швидкий запис">
-      <TelegramLink className="btn btn-fill" href={bookingLink} source="sticky">
+      <TelegramLink className="btn btn-fill" href={bookingLink} source="sticky_cta">
         Telegram
       </TelegramLink>
       <Link className="btn btn-line" href="/#pricing">

@@ -25,7 +25,7 @@ export function Contact() {
               <PhoneIcon />
               <div>
                 <b>
-                  <TelegramLink href={site.telegramUrl} source="contact">
+                  <TelegramLink href={site.telegramUrl} source="contact_handle">
                     @{site.telegramHandle}
                   </TelegramLink>
                 </b>
@@ -51,7 +51,7 @@ export function Contact() {
           </div>
 
           <div className={`btns ${styles.actions}`}>
-            <TelegramLink href={bookingLink} source="contact" className="btn btn-fill">
+            <TelegramLink href={bookingLink} source="contact_cta" className="btn btn-fill">
               Відкрити Telegram <span className="arw">⟶</span>
             </TelegramLink>
           </div>

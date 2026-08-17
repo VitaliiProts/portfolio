@@ -41,7 +41,7 @@ export function BookingForm() {
       .join('\n');
 
     setSent(true);
-    trackTelegramClick('form');
+    trackTelegramClick('contact_form');
     window.open(telegramLink(text + attributionSuffix()), '_blank', 'noopener,noreferrer');
   }
 

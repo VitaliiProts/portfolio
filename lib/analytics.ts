@@ -7,17 +7,53 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
+/**
+ * Кожна кнопка переходу в Telegram має власне значення — інакше не видно, що
+ * саме працює: іконка в шапці чи та сама іконка у футері, текстовий нік у
+ * контактах чи кнопка поруч із ним. Назва читається як «місце_елемент».
+ */
 export type TelegramCtaSource =
-  | 'hero'
-  | 'header'
-  | 'sticky'
-  | 'contact'
-  | 'social'
-  | 'form'
+  | 'hero_cta'
+  | 'header_cta'
+  | 'header_social'
+  | 'footer_social'
+  | 'sticky_cta'
+  | 'contact_handle'
+  | 'contact_cta'
+  | 'contact_form'
   | 'pricing_individual'
   | 'pricing_eating_disorder'
   | 'pricing_teen_pair'
-  | 'test_result';
+  | 'test_result_cta';
+
+export type TelegramCtaSection =
+  | 'hero'
+  | 'header'
+  | 'footer'
+  | 'sticky'
+  | 'contact'
+  | 'pricing'
+  | 'test';
+
+/**
+ * Секція поруч із конкретною кнопкою: дає розріз «звідки приходять заявки» без
+ * розбору назв у звіті. Тримаємо мапою, а не відрізаємо префікс від назви, бо
+ * префікс не завжди дорівнює секції — липка панель не належить жодній.
+ */
+const ctaSection: Record<TelegramCtaSource, TelegramCtaSection> = {
+  hero_cta: 'hero',
+  header_cta: 'header',
+  header_social: 'header',
+  footer_social: 'footer',
+  sticky_cta: 'sticky',
+  contact_handle: 'contact',
+  contact_cta: 'contact',
+  contact_form: 'contact',
+  pricing_individual: 'pricing',
+  pricing_eating_disorder: 'pricing',
+  pricing_teen_pair: 'pricing',
+  test_result_cta: 'test',
+};
 
 function normalizeAdsId(value: string | undefined): string | undefined {
   const id = value?.trim();
@@ -86,8 +122,18 @@ function sendAdsConversion(channel: ConversionChannel, value: number): void {
   });
 }
 
-export function trackTelegramClick(source: TelegramCtaSource): void {
-  const value = source === 'form' ? leadValue.form : leadValue.telegram;
+/** Властивості, які має лише частина кнопок. */
+type TelegramClickContext = {
+  /** Slug тесту — тільки для кнопки на екрані результату. */
+  test?: string;
+};
+
+export function trackTelegramClick(
+  source: TelegramCtaSource,
+  context: TelegramClickContext = {},
+): void {
+  const value = source === 'contact_form' ? leadValue.form : leadValue.telegram;
+  const section = ctaSection[source];
 
   sendAdsConversion('telegram', value);
 
@@ -95,11 +141,17 @@ export function trackTelegramClick(source: TelegramCtaSource): void {
   // перший, інакше не видно, скільки разів людина вагалася.
   window.gtag?.('event', 'telegram_click', {
     cta_source: source,
+    cta_section: section,
+    ...(context.test ? { test: context.test } : {}),
     value,
     currency: conversionCurrency,
   });
 
-  trackAmplitude('Clicked Telegram CTA', { 'CTA Source': source });
+  trackAmplitude('Clicked Telegram CTA', {
+    'CTA Source': source,
+    'CTA Section': section,
+    ...(context.test ? { Test: context.test } : {}),
+  });
 }
 
 export function trackTestStarted(slug: string): void {

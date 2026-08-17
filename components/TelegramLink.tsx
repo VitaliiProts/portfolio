@@ -7,6 +7,8 @@ import { withAttribution } from '@/lib/attribution';
 type Props = Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'onClick' | 'target' | 'rel'> & {
   href: string;
   source: TelegramCtaSource;
+  /** Slug тесту — лише для кнопки на екрані результату тесту. */
+  testSlug?: string;
 };
 
 /**
@@ -17,7 +19,7 @@ type Props = Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'onClick' | 'target' |
  * сервері й клієнті збігається, зайвого рендера немає, а посилання лишається
  * робочим навіть без JS.
  */
-export function TelegramLink({ href, source, children, ...rest }: Props) {
+export function TelegramLink({ href, source, testSlug, children, ...rest }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export function TelegramLink({ href, source, children, ...rest }: Props) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackTelegramClick(source)}
+      onClick={() => trackTelegramClick(source, { test: testSlug })}
     >
       {children}
     </a>

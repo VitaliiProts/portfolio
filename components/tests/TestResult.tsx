@@ -109,7 +109,12 @@ export function TestResult({ test, result, related, onRestart }: Props) {
       </p>
 
       <div className={`btns ${styles.actions}`}>
-        <TelegramLink className="btn btn-fill" href={telegramLink(bookingText)} source="test_result">
+        <TelegramLink
+          className="btn btn-fill"
+          href={telegramLink(bookingText)}
+          source="test_result_cta"
+          testSlug={test.slug}
+        >
           Обговорити результат <span className="arw">⟶</span>
         </TelegramLink>
         <button type="button" className="btn btn-line" onClick={onRestart}>

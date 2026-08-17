@@ -38,7 +38,7 @@ export function Hero() {
           </ul>
 
           <div className="btns">
-            <TelegramLink href={bookingLink} source="hero" className="btn btn-fill">
+            <TelegramLink href={bookingLink} source="hero_cta" className="btn btn-fill">
               Написати в Telegram
             </TelegramLink>
             <a href="#pricing" className="btn btn-line">

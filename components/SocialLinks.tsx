@@ -5,7 +5,13 @@ import { site } from '@/lib/site';
 import { InstagramIcon, TelegramIcon } from './icons';
 import { TelegramLink } from './TelegramLink';
 
-export function SocialLinks({ className = 'social' }: { className?: string }) {
+type Props = {
+  /** Блок стоїть і в шапці, і у футері — щоб кліки не злипалися в аналітиці. */
+  placement: 'header' | 'footer';
+  className?: string;
+};
+
+export function SocialLinks({ placement, className = 'social' }: Props) {
   return (
     <div className={className}>
       <a
@@ -19,7 +25,7 @@ export function SocialLinks({ className = 'social' }: { className?: string }) {
       </a>
       <TelegramLink
         href={site.telegramUrl}
-        source="social"
+        source={`${placement}_social`}
         aria-label={`Telegram @${site.telegramHandle}`}
       >
         <TelegramIcon />

@@ -54,9 +54,9 @@ export function Header() {
           ))}
         </nav>
 
-        <SocialLinks />
+        <SocialLinks placement="header" />
 
-        <TelegramLink className={styles.cta} href={bookingLink} source="header">
+        <TelegramLink className={styles.cta} href={bookingLink} source="header_cta">
           Записатися
         </TelegramLink>
 
