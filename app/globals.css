@@ -265,6 +265,36 @@ h3 {
   aspect-ratio: 4 / 5;
 }
 
+/* Safari ≤14, Chrome ≤87 і старі WebView не знають aspect-ratio. Висота рамки
+   тримається тільки на ньому, а саме фото лежить у ній абсолютно (next/image
+   fill), тому без запасного варіанта рамка стає нульової висоти — і фото зникає
+   повністю. Розпірка на ::before дає ту саму пропорцію: відсотковий padding
+   рахується від ширини самої рамки, тому пропорція не ламається там, де ширину
+   обмежує max-width або width у відсотках. */
+@supports not (aspect-ratio: 1 / 1) {
+  .arch-hero,
+  .arch-top,
+  .arch-leaf {
+    display: block;
+  }
+
+  .arch-hero::before,
+  .arch-top::before,
+  .arch-leaf::before {
+    content: '';
+    display: block;
+  }
+
+  .arch-hero::before {
+    padding-top: 120%;
+  }
+
+  .arch-top::before,
+  .arch-leaf::before {
+    padding-top: 125%;
+  }
+}
+
 /* --- декоративні плями --------------------------------------------------- */
 
 .blob {

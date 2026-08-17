@@ -39,6 +39,15 @@
   overflow: hidden;
 }
 
+/* Запас для браузерів без aspect-ratio — див. коментар у globals.css. */
+@supports not (aspect-ratio: 1 / 1) {
+  .cert a::before {
+    content: '';
+    display: block;
+    padding-top: 75%;
+  }
+}
+
 .cert img {
   width: 100%;
   height: 100%;
