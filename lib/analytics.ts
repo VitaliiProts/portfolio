@@ -1,4 +1,4 @@
-import * as amplitude from '@amplitude/unified';
+import { trackAmplitude } from './amplitude';
 import { prices } from './site';
 
 declare global {
@@ -99,12 +99,12 @@ export function trackTelegramClick(source: TelegramCtaSource): void {
     currency: conversionCurrency,
   });
 
-  amplitude.track('Clicked Telegram CTA', { 'CTA Source': source });
+  trackAmplitude('Clicked Telegram CTA', { 'CTA Source': source });
 }
 
 export function trackTestStarted(slug: string): void {
   window.gtag?.('event', 'test_started', { test: slug });
-  amplitude.track('Started Test', { Test: slug });
+  trackAmplitude('Started Test', { Test: slug });
 }
 
 /**
@@ -113,7 +113,7 @@ export function trackTestStarted(slug: string): void {
  */
 export function trackTestCompleted(slug: string, bands: Record<string, string>): void {
   window.gtag?.('event', 'test_completed', { test: slug, ...bands });
-  amplitude.track('Completed Test', { Test: slug, ...bands });
+  trackAmplitude('Completed Test', { Test: slug, ...bands });
 }
 
 export function trackInstagramClick(): void {
@@ -124,5 +124,5 @@ export function trackInstagramClick(): void {
     currency: conversionCurrency,
   });
 
-  amplitude.track('Clicked Instagram');
+  trackAmplitude('Clicked Instagram');
 }

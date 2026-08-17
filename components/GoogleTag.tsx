@@ -1,5 +1,5 @@
-import Script from 'next/script';
 import { ga4Id, googleAdsId } from '@/lib/analytics';
+import { GoogleTagLoader } from './GoogleTagLoader';
 
 /**
  * ЄЕЗ + Велика Британія та Швейцарія: там показ реклами без згоди заборонений.
@@ -32,9 +32,10 @@ const deniedInConsentRegions = {
 /**
  * Google tag для GA4 і Google Ads.
  *
- * Consent Mode v2 має бути виставлений до завантаження gtag.js, тому бутстрап
- * іде як beforeInteractive, а сама бібліотека — afterInteractive, щоб не
- * псувати LCP на мобільних.
+ * Consent Mode v2 і конфігурація потоків мають бути виставлені до того, як
+ * gtag.js розбере чергу, тому весь бутстрап іде інлайном під час парсингу HTML.
+ * Сама бібліотека (~150 КБ) чекає на першу взаємодію: інакше вона з'їдає
+ * головний потік одразу після першого екрана.
  */
 export function GoogleTag() {
   const measurementIds = [ga4Id, googleAdsId].filter(Boolean) as string[];
@@ -49,23 +50,17 @@ export function GoogleTag() {
     "gtag('set','url_passthrough',true);",
     "gtag('set','ads_data_redaction',true);",
     "gtag('js',new Date());",
+    ...measurementIds.map((id) => `gtag('config','${id}');`),
   ].join('\n');
-
-  const config = measurementIds.map((id) => `gtag('config','${id}');`).join('\n');
 
   return (
     <>
-      {/* Інлайн, а не next/script: Consent Mode має бути виставлений під час
+      {/* Інлайн, а не next/script: черга в dataLayer має бути наповнена під час
           парсингу HTML — раніше, ніж завантажиться gtag.js. */}
       <script dangerouslySetInnerHTML={{ __html: bootstrap }} />
-      <Script
-        id="google-tag"
+      <GoogleTagLoader
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementIds[0]}`}
-        strategy="afterInteractive"
       />
-      <Script id="google-tag-config" strategy="afterInteractive">
-        {config}
-      </Script>
     </>
   );
 }
