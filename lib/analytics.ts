@@ -61,9 +61,9 @@ function normalizeAdsId(value: string | undefined): string | undefined {
   return /^\d+$/.test(id) ? `AW-${id}` : id;
 }
 
-export const googleAdsId = normalizeAdsId(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
+export const googleAdsId = normalizeAdsId(process.env.NEXT_PUBLIC_GADS_ID);
 export const googleAdsConversionLabel =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL?.trim() || undefined;
+  process.env.NEXT_PUBLIC_GADS_LABEL_TELEGRAM?.trim() || undefined;
 export const ga4Id = process.env.NEXT_PUBLIC_GA4_ID?.trim() || undefined;
 const conversionCurrency = 'UAH';
 
