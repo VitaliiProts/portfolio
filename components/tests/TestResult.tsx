@@ -58,7 +58,7 @@ function ScaleBar({ scale }: { scale: ScaleResult }) {
 }
 
 export function TestResult({ test, result, related, onRestart }: Props) {
-  const bookingText = `Вітаю! Пройшла на сайті «${test.title}» і хочу записатися на консультацію.`;
+  const bookingText = 'Вітаю, проходила тест на сайті, хочу обговорити результат.';
   const ref = useRef<HTMLElement>(null);
 
   // Останнє питання змінюється результатом на тому ж місці: без переносу фокуса
@@ -108,18 +108,24 @@ export function TestResult({ test, result, related, onRestart }: Props) {
         клінічний психолог після очної оцінки. Методика: {test.source}.
       </p>
 
-      <div className={`btns ${styles.actions}`}>
-        <TelegramLink
-          className="btn btn-fill"
-          href={telegramLink(bookingText)}
-          source="test_result_cta"
-          testSlug={test.slug}
-        >
-          Обговорити результат <span className="arw">⟶</span>
-        </TelegramLink>
-        <button type="button" className="btn btn-line" onClick={onRestart}>
-          Пройти ще раз
-        </button>
+      <div className={styles.softCta}>
+        <p className={styles.softCtaText}>
+          Результат тесту — орієнтир, а не висновок. Якщо хочете розібратися, що за ним стоїть, —
+          можна обговорити це з психологом у комфортному форматі.
+        </p>
+        <div className={`btns ${styles.actions}`}>
+          <TelegramLink
+            className="btn btn-fill"
+            href={telegramLink(bookingText)}
+            source="test_result_cta"
+            testSlug={test.slug}
+          >
+            Обговорити результат <span className="arw">⟶</span>
+          </TelegramLink>
+          <button type="button" className="btn btn-line" onClick={onRestart}>
+            Пройти ще раз
+          </button>
+        </div>
       </div>
 
       <div className={styles.related}>

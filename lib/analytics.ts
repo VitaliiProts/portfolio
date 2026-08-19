@@ -128,8 +128,6 @@ type TelegramClickContext = {
   test?: string;
 };
 
-console.log('test')
-
 export function trackTelegramClick(
   source: TelegramCtaSource,
   context: TelegramClickContext = {},

@@ -303,8 +303,23 @@
   max-width: 48em;
 }
 
+.softCta {
+  margin-top: 34px;
+  padding: 28px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.softCtaText {
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 42em;
+  margin-bottom: 22px;
+}
+
 .actions {
-  margin-top: 26px;
+  margin-top: 0;
 }
 
 .actions button {

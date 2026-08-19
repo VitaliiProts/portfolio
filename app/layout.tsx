@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { GoogleTag } from '@/components/GoogleTag';
 import { Header } from '@/components/Header';
 import { StickyCta } from '@/components/StickyCta';
+import { TelegramClickTracker } from '@/components/TelegramClickTracker';
 import { formatPrice, prices, site } from '@/lib/site';
 import './globals.css';
 
@@ -112,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StickyCta />
         <Footer />
         <CrisisBar />
+        <TelegramClickTracker />
         <GoogleTag />
         <Amplitude />
         <Analytics />

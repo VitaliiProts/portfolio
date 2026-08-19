@@ -37,6 +37,7 @@ export function TelegramLink({ href, source, testSlug, children, ...rest }: Prop
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-tracked
       onClick={() => trackTelegramClick(source, { test: testSlug })}
     >
       {children}
