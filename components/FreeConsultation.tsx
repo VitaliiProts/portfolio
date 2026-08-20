@@ -1,10 +1,15 @@
 import { freeConsultLink } from '@/lib/site';
+import { SectionViewTracker } from './SectionViewTracker';
 import { TelegramLink } from './TelegramLink';
 import styles from './FreeConsultation.module.css';
 
+const sectionId = 'free-consult';
+
 export function FreeConsultation() {
   return (
-    <section className={styles.section} id="free-consult" aria-labelledby="free-consult-title">
+    <section className={styles.section} id={sectionId} aria-labelledby="free-consult-title">
+      <SectionViewTracker id={sectionId} section="free_consult" />
+
       <div className={`wrap ${styles.inner}`}>
         <span className={styles.badge}>
           <svg viewBox="0 0 24 24" aria-hidden="true">

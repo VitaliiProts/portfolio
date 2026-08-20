@@ -157,6 +157,18 @@ export function trackTelegramClick(
   });
 }
 
+/**
+ * Секції, доскрол до яких рахуємо окремо. Значення збігаються з
+ * `TelegramCtaSection`, тож у звіті видно всю воронку блоку: скільки людей
+ * побачили секцію і скільки з них натиснули кнопку саме в ній.
+ */
+export type ViewedSection = 'free_consult';
+
+export function trackSectionView(section: ViewedSection): void {
+  window.gtag?.('event', 'section_view', { section });
+  trackAmplitude('Viewed Section', { Section: section });
+}
+
 export function trackTestStarted(slug: string): void {
   window.gtag?.('event', 'test_started', { test: slug });
   trackAmplitude('Started Test', { Test: slug });

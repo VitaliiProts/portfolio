@@ -36,6 +36,10 @@ function init(): Promise<AmplitudeSdk | null> {
           },
         },
         sessionReplay: { sampleRate: 1 },
+        // initAll піднімає ще й Guides & Surveys: окремий скрипт із CDN і подія
+        // про власне завантаження. На лендінгу без опитувань і підказок це лише
+        // зайвий запит і шум у звітах.
+        engagement: { skip: true },
       });
 
       const visitor = visitorId();

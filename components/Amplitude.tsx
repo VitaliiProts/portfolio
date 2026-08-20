@@ -1,18 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { startAmplitude, trackAmplitude } from '@/lib/amplitude';
+import { startAmplitude } from '@/lib/amplitude';
 import { onEngagement } from '@/lib/engagement';
 
+/** Перегляд сторінки рахує автозахоплення SDK, тож тут лише запуск. */
 export function Amplitude() {
-  useEffect(
-    () =>
-      onEngagement(() => {
-        startAmplitude();
-        trackAmplitude('Viewed Home Page', { 'Prompt Version': 'BA400.4' }); // helps improve this setup flow — safe to remove once you've verified the event lands
-      }),
-    [],
-  );
+  useEffect(() => onEngagement(startAmplitude), []);
 
   return null;
 }
