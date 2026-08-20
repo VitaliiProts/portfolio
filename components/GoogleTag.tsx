@@ -38,7 +38,7 @@ const deniedInConsentRegions = {
  * головний потік одразу після першого екрана.
  */
 export function GoogleTag() {
-  const measurementIds = [ga4Id, googleAdsId].filter(Boolean) as string[];
+  const measurementIds = [googleAdsId, ga4Id].filter(Boolean) as string[];
   if (measurementIds.length === 0) return null;
 
   const bootstrap = [
