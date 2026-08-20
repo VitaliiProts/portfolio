@@ -4,11 +4,11 @@
  */
 
 /**
- * Єдиний хост, який має бути в індексі Google. Решта адрес (www, прев'ю та
+ * Єдиний хост, який має бути в індексі Google. Решта адрес (non-www, прев'ю та
  * службові домени Vercel) або редиректять сюди, або віддають X-Robots-Tag:
  * noindex — див. next.config.ts.
  */
-export const canonicalHost = 'psykristel.com';
+export const canonicalHost = 'www.psykristel.com';
 
 /**
  * Навмисно не підставляємо адресу деплою Vercel: canonical, sitemap і
