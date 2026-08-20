@@ -6,6 +6,7 @@ import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
 import { GoogleTag } from '@/components/GoogleTag';
 import { Header } from '@/components/Header';
+import { ScrollToSection } from '@/components/ScrollToSection';
 import { StickyCta } from '@/components/StickyCta';
 import { TelegramClickTracker } from '@/components/TelegramClickTracker';
 import { formatPrice, prices, site } from '@/lib/site';
@@ -113,6 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StickyCta />
         <Footer />
         <CrisisBar />
+        <ScrollToSection />
         <TelegramClickTracker />
         <GoogleTag />
         <Amplitude />

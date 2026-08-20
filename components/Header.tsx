@@ -48,7 +48,20 @@ export function Header() {
           aria-label="Основна навігація"
         >
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => {
+                setOpen(false);
+                const id = item.href.replace(/^\//, '');
+                const el = document.getElementById(id);
+                if (el) {
+                  e.preventDefault();
+                  el.scrollIntoView({ behavior: 'smooth' });
+                  window.history.pushState(null, '', item.href);
+                }
+              }}
+            >
               {item.label}
             </a>
           ))}

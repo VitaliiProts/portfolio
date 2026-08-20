@@ -17,14 +17,14 @@ export function Topics() {
             допомогти<span className="dot">.</span>
           </h2>
           <p className={`lead ${styles.lead}`}>
-            Не обов’язково чекати, поки стане нестерпно. Ось із чим найчастіше звертаються.
+            Не обов&#8217;язково чекати, поки стане нестерпно. Ось із чим найчастіше звертаються.
           </p>
 
           <AccordionList items={topics} defaultOpenFirst />
 
           <div className={`btns ${styles.actions}`}>
             <a href="#contact" className="btn btn-fill">
-              Написати мені <span className="arw">⟶</span>
+              Написати мені <span className="arw">&#x27F6;</span>
             </a>
           </div>
         </div>

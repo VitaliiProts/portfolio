@@ -57,3 +57,6 @@ export function telegramLink(text?: string): string {
 }
 
 export const bookingLink = telegramLink('Вітаю, хочу записатися на консультацію');
+export const freeConsultLink = telegramLink(
+  'Вітаю, хочу записатися на безкоштовну 15-хвилинну консультацію',
+);

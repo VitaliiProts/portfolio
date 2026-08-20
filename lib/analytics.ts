@@ -24,7 +24,8 @@ export type TelegramCtaSource =
   | 'pricing_individual'
   | 'pricing_eating_disorder'
   | 'pricing_teen_pair'
-  | 'test_result_cta';
+  | 'test_result_cta'
+  | 'free_consult_cta';
 
 export type TelegramCtaSection =
   | 'hero'
@@ -33,7 +34,8 @@ export type TelegramCtaSection =
   | 'sticky'
   | 'contact'
   | 'pricing'
-  | 'test';
+  | 'test'
+  | 'free_consult';
 
 /**
  * Секція поруч із конкретною кнопкою: дає розріз «звідки приходять заявки» без
@@ -53,6 +55,7 @@ const ctaSection: Record<TelegramCtaSource, TelegramCtaSection> = {
   pricing_eating_disorder: 'pricing',
   pricing_teen_pair: 'pricing',
   test_result_cta: 'test',
+  free_consult_cta: 'free_consult',
 };
 
 function normalizeAdsId(value: string | undefined): string | undefined {

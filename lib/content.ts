@@ -1,26 +1,27 @@
 import type { TelegramCtaSource } from './analytics';
-import { formatPrice, prices, telegramLink } from './site';
+import { prices, telegramLink } from './site';
 
 export type NavItem = { href: string; label: string };
 
 /**
- * Посилання на секції головної абсолютні (`/#about`, а не `#about`):
- * з окремих сторінок на кшталт `/tests/anxiety` голий якір нікуди не веде.
+ * Посилання на секції головної — чисті шляхи (`/about`, а не `/#about`).
+ * Rewrites у next.config.ts віддають головну за цими шляхами, а ScrollToSection
+ * прокручує до потрібної секції.
  */
 export const navItems: readonly NavItem[] = [
-  { href: '/#about', label: 'Про мене' },
-  { href: '/#certs', label: 'Сертифікати' },
-  { href: '/#services', label: 'З чим працюю' },
+  { href: '/about', label: 'Про мене' },
+  { href: '/certs', label: 'Сертифікати' },
+  { href: '/services', label: 'З чим працюю' },
   { href: '/tests', label: 'Тести' },
-  { href: '/#faq', label: 'Запитання' },
-  { href: '/#reviews', label: 'Відгуки' },
-  { href: '/#pricing', label: 'Сесії' },
-  { href: '/#contact', label: 'Контакти' },
+  { href: '/faq', label: 'Запитання' },
+  { href: '/reviews', label: 'Відгуки' },
+  { href: '/pricing', label: 'Сесії' },
+  { href: '/contact', label: 'Контакти' },
 ];
 
 export const heroProof: readonly string[] = [
-  `від ${formatPrice(prices.individual)} / сесія`,
-  '50–60 хвилин',
+  'Перші 15 хвилин безкоштовно',
+  'Знайомство без оплати',
   'Конфіденційно',
   'Дорослі та підлітки',
 ];
@@ -431,20 +432,20 @@ export const contactSubjects: readonly string[] = [
 ];
 
 export const footerSections: readonly NavItem[] = [
-  { href: '/#about', label: 'Про мене' },
-  { href: '/#certs', label: 'Сертифікати' },
-  { href: '/#services', label: 'З чим працюю' },
+  { href: '/about', label: 'Про мене' },
+  { href: '/certs', label: 'Сертифікати' },
+  { href: '/services', label: 'З чим працюю' },
   { href: '/tests', label: 'Психологічні тести' },
-  { href: '/#faq', label: 'Поширені запитання' },
-  { href: '/#reviews', label: 'Відгуки' },
-  { href: '/#pricing', label: 'Сесії та оплата' },
-  { href: '/#contact', label: 'Контакти' },
+  { href: '/faq', label: 'Поширені запитання' },
+  { href: '/reviews', label: 'Відгуки' },
+  { href: '/pricing', label: 'Сесії та оплата' },
+  { href: '/contact', label: 'Контакти' },
 ];
 
 export const footerTopics: readonly NavItem[] = [
-  { href: '/#services', label: 'РХП · анорексія · булімія' },
-  { href: '/#services', label: 'Тривога · панічні атаки' },
-  { href: '/#services', label: 'Самооцінка · прийняття себе' },
-  { href: '/#topics', label: 'Підліткова терапія' },
-  { href: '/#pricing', label: 'Онлайн-сесії' },
+  { href: '/services', label: 'РХП · анорексія · булімія' },
+  { href: '/services', label: 'Тривога · панічні атаки' },
+  { href: '/services', label: 'Самооцінка · прийняття себе' },
+  { href: '/topics', label: 'Підліткова терапія' },
+  { href: '/pricing', label: 'Онлайн-сесії' },
 ];
