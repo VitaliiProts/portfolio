@@ -9,7 +9,7 @@ import { Header } from '@/components/Header';
 import { ScrollToSection } from '@/components/ScrollToSection';
 import { StickyCta } from '@/components/StickyCta';
 import { TelegramClickTracker } from '@/components/TelegramClickTracker';
-import { formatPrice, prices, site } from '@/lib/site';
+import { site } from '@/lib/site';
 import './globals.css';
 
 const display = Cormorant_Garamond({
@@ -26,15 +26,14 @@ const body = Jost({
   variable: '--font-body',
 });
 
-const priceFrom = formatPrice(prices.individual);
-
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: `Психолог з РХП — терапія анорексії, булімії, тривоги | ${site.shortName}`,
     template: `%s | ${site.shortName}`,
   },
-  description: `Запис до психолога з РХП від ${priceFrom}. Терапія анорексії, булімії, переїдання, тривоги та панічних атак. Онлайн і в Києві. Конфіденційно. Відповідь у Telegram протягом дня.`,
+  description:
+    'Психолог з РХП. Перші 15 хвилин — безкоштовно. Терапія анорексії, булімії, переїдання, тривоги та панічних атак. Онлайн і в Києві. Конфіденційно. Відповідь у Telegram.',
   keywords: [
     'психолог РХП',
     'психолог Київ',
@@ -66,7 +65,7 @@ export const metadata: Metadata = {
     locale: site.locale,
     url: site.url,
     siteName: site.name,
-    title: `Психолог з РХП — ${site.shortName} | від ${priceFrom}`,
+    title: `Психолог з РХП — ${site.shortName}`,
     description:
       'Терапія РХП, тривоги та панічних атак. Онлайн і Київ. Конфіденційно. Запис у Telegram.',
     images: [
@@ -80,7 +79,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Психолог з РХП — ${site.shortName} | від ${priceFrom}`,
+    title: `Психолог з РХП — ${site.shortName}`,
     description: 'Терапія РХП, тривоги та панічних атак. Онлайн і Київ. Запис у Telegram.',
     images: [site.ogImage],
   },
