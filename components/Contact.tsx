@@ -45,7 +45,7 @@ export function Contact() {
               <WalletIcon />
               <div>
                 <b>від {formatPrice(prices.individual)}</b>
-                <span>Оплата мінімум за 24 години до сесії</span>
+                <span>Оплата напередодні — так час залишається за вами</span>
               </div>
             </div>
           </div>
