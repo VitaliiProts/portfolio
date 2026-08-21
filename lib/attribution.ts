@@ -16,6 +16,7 @@ export type Attribution = {
   campaign?: string;
   content?: string;
   term?: string;
+  keyword?: string;
   gclid?: string;
 };
 
@@ -37,15 +38,22 @@ function capture(): Attribution | null {
   captured = true;
 
   const params = new URLSearchParams(window.location.search);
+  // ValueTrack підставляє порожній рядок, коли макрос не має значення (DSA,
+  // performance max), тому порожнє прирівнюємо до відсутнього.
+  const param = (name: string) => params.get(name)?.trim() || undefined;
+
+  const term = param('utm_term');
   const fresh: Attribution = {
-    source: params.get('utm_source') ?? undefined,
-    medium: params.get('utm_medium') ?? undefined,
-    campaign: params.get('utm_campaign') ?? undefined,
-    content: params.get('utm_content') ?? undefined,
-    term: params.get('utm_term') ?? undefined,
+    source: param('utm_source'),
+    medium: param('utm_medium'),
+    campaign: param('utm_campaign'),
+    content: param('utm_content'),
+    term,
+    // {keyword} зазвичай кладуть у utm_term, але в частині кампаній його
+    // передають окремим параметром — беремо перший непорожній.
+    keyword: term ?? param('keyword') ?? param('kw'),
     // wbraid/gbraid приходять замість gclid, коли користувач не дав згоди на cookie.
-    gclid:
-      params.get('gclid') ?? params.get('wbraid') ?? params.get('gbraid') ?? undefined,
+    gclid: param('gclid') ?? param('wbraid') ?? param('gbraid'),
   };
 
   if (!Object.values(fresh).some(Boolean)) return readStored();
@@ -57,6 +65,11 @@ function capture(): Attribution | null {
   }
 
   return fresh;
+}
+
+/** Мітки першого переходу в сесії. null для органічного трафіку. */
+export function adAttribution(): Attribution | null {
+  return capture();
 }
 
 /** Рядок для дописування в кінець повідомлення. Порожній для органічного трафіку. */
