@@ -36,7 +36,6 @@ export const site = {
   telegramHandle: 'Krav_Kristel',
   telegramUrl: 'https://t.me/Krav_Kristel',
   instagramUrl: 'https://www.instagram.com/psy_kristel',
-  crisisLine: '7333',
 } as const;
 
 export const prices = {
@@ -57,6 +56,3 @@ export function telegramLink(text?: string): string {
 }
 
 export const bookingLink = telegramLink('Вітаю, хочу записатися на консультацію');
-export const freeConsultLink = telegramLink(
-  'Вітаю, хочу записатися на безкоштовну 15-хвилинну консультацію',
-);

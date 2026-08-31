@@ -24,8 +24,7 @@ export type TelegramCtaSource =
   | 'pricing_individual'
   | 'pricing_eating_disorder'
   | 'pricing_teen_pair'
-  | 'test_result_cta'
-  | 'free_consult_cta';
+  | 'test_result_cta';
 
 export type TelegramCtaSection =
   | 'hero'
@@ -34,8 +33,7 @@ export type TelegramCtaSection =
   | 'sticky'
   | 'contact'
   | 'pricing'
-  | 'test'
-  | 'free_consult';
+  | 'test';
 
 /**
  * Секція поруч із конкретною кнопкою: дає розріз «звідки приходять заявки» без
@@ -55,7 +53,6 @@ const ctaSection: Record<TelegramCtaSource, TelegramCtaSection> = {
   pricing_eating_disorder: 'pricing',
   pricing_teen_pair: 'pricing',
   test_result_cta: 'test',
-  free_consult_cta: 'free_consult',
 };
 
 function normalizeAdsId(value: string | undefined): string | undefined {
@@ -155,18 +152,6 @@ export function trackTelegramClick(
     'CTA Section': section,
     ...(context.test ? { Test: context.test } : {}),
   });
-}
-
-/**
- * Секції, доскрол до яких рахуємо окремо. Значення збігаються з
- * `TelegramCtaSection`, тож у звіті видно всю воронку блоку: скільки людей
- * побачили секцію і скільки з них натиснули кнопку саме в ній.
- */
-export type ViewedSection = 'free_consult';
-
-export function trackSectionView(section: ViewedSection): void {
-  window.gtag?.('event', 'section_view', { section });
-  trackAmplitude('Viewed Section', { Section: section });
 }
 
 export function trackTestStarted(slug: string): void {

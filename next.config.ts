@@ -15,7 +15,6 @@ const sectionIds = [
   'pricing',
   'contact',
   'privacy',
-  'free-consult',
 ];
 
 const nextConfig: NextConfig = {

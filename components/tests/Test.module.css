@@ -169,20 +169,11 @@
   margin-bottom: 30px;
 }
 
-.crisis,
 .behavior {
   border-radius: 14px;
   padding: 20px 24px;
   font-size: 16px;
   margin-bottom: 28px;
-}
-
-.crisis {
-  background: var(--alert);
-  color: var(--white);
-}
-
-.behavior {
   background: var(--cream-deep);
   color: var(--ink);
 }

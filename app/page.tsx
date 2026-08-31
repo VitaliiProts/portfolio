@@ -2,7 +2,6 @@ import { About } from '@/components/About';
 import { Certificates } from '@/components/Certificates';
 import { Contact } from '@/components/Contact';
 import { Faq } from '@/components/Faq';
-import { FreeConsultation } from '@/components/FreeConsultation';
 import { Hero } from '@/components/Hero';
 import { JsonLd } from '@/components/JsonLd';
 import { Pricing } from '@/components/Pricing';
@@ -20,7 +19,6 @@ export default function HomePage() {
       <Services />
       <Certificates />
       <Topics />
-      <FreeConsultation />
       <Pricing />
       <Contact />
       <Reviews />

@@ -18,7 +18,6 @@ const sectionIds = new Set([
   'pricing',
   'contact',
   'privacy',
-  'free-consult',
 ]);
 
 export function ScrollToSection() {

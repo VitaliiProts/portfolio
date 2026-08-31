@@ -39,12 +39,6 @@ check('GAD-7 діапазон при 10', computeResult(gad7, [3, 3, 2, 2, 0, 0,
 
 const phq9 = tests.find((test) => test.slug === 'depression')!;
 check('PHQ-9 максимум', computeResult(phq9, Array(9).fill(3)).scales[0]?.score, 27);
-check(
-  'PHQ-9 кризовий маркер при ненульовому 9-му пункті',
-  computeResult(phq9, [0, 0, 0, 0, 0, 0, 0, 0, 1]).crisis,
-  true,
-);
-check('PHQ-9 без кризи при нулях', computeResult(phq9, Array(9).fill(0)).crisis, false);
 
 const ybocs = tests.find((test) => test.slug === 'ocd')!;
 check('Y-BOCS максимум', computeResult(ybocs, Array(10).fill(4)).scales[0]?.score, 40);

@@ -88,7 +88,7 @@ function buildSegments(
   });
 }
 
-function hasFlag(test: TestDefinition, answers: Answers, flag: 'crisis' | 'behavior'): boolean {
+function hasFlag(test: TestDefinition, answers: Answers, flag: 'behavior'): boolean {
   return test.questions.some((question, index) => {
     if (question.flag !== flag) return false;
     const answer = answers[index];
@@ -111,11 +111,8 @@ export function computeResult(test: TestDefinition, answers: Answers): TestResul
     };
   });
 
-  const alert = scales.some((scale) => scale.band.tone === 'alert');
-
   return {
     scales,
-    crisis: hasFlag(test, answers, 'crisis') || (test.crisisOnAlert === true && alert),
     behavior: hasFlag(test, answers, 'behavior'),
     style: resolveStyle(test, scales),
   };

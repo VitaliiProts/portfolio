@@ -20,8 +20,8 @@ export const navItems: readonly NavItem[] = [
 ];
 
 export const heroProof: readonly string[] = [
-  'Перші 15 хвилин безкоштовно',
-  'Знайомство без оплати',
+  'Онлайн та в Києві',
+  'Гештальт-підхід',
   'Конфіденційно',
   'Дорослі та підлітки',
 ];
