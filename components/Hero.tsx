@@ -13,8 +13,10 @@ export function Hero() {
       <div className={`wrap ${styles.inner}`}>
         <div>
           <p className="eyebrow">Психолог · Київ та онлайн</p>
+          {/* Пробіл перед <br> обов'язковий: без нього текстова екстракція
+              (пошукові й LLM-краулери) склеює рядки в «Терапія РХПі тривоги». */}
           <h1 id="hero-title">
-            Терапія РХП
+            Терапія РХП{' '}
             <br />і тривоги<span className="dot">.</span>
           </h1>
           <p className={styles.brand}>Крістель Кравець — фахівець з розладів харчової поведінки</p>

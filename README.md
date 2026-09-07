@@ -27,10 +27,17 @@ npm run dev                  # http://localhost:3000
 
 | Змінна                 | Опис                                                                                        |
 | ---------------------- | ------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | Канонічний домен. Використовується в `metadataBase`, `sitemap.xml`, `robots.txt` і JSON-LD. |
+| `NEXT_PUBLIC_SITE_URL` | Лише override для локального запуску. Прод бере адресу з `canonicalHost` у `lib/site.ts`. |
 
-Якщо змінної немає, підставляється адреса продакшн-деплою Vercel, а вже потім —
-запасне значення з `lib/site.ts`.
+Канонічний хост заданий один раз — константою `canonicalHost` у `lib/site.ts`
+(`www.psykristel.com`). З неї будуються `metadataBase`, `canonical`, `og:url`,
+`sitemap.xml`, `robots.txt` і JSON-LD.
+
+`NEXT_PUBLIC_SITE_URL` враховується, тільки якщо вказує на цей самий хост або на
+`localhost`. Адресу на будь-якому іншому домені код свідомо ігнорує: інакше
+достатньо один раз вписати сюди apex замість `www` — і прод почне віддавати
+`canonical` на домен, який редиректить назад на нього ж. Щоб змінити канонічний
+домен, правимо `canonicalHost`, а не змінну оточення.
 
 ## Структура
 
@@ -90,12 +97,15 @@ git push -u origin main
 
 2. На [vercel.com](https://vercel.com) → **Add New… → Project** → імпортуйте репозиторій.
    Next.js визначається автоматично, збірку налаштовувати не треба.
-3. **Settings → Environment Variables** → додайте `NEXT_PUBLIC_SITE_URL` зі
-   значенням реального домену (наприклад `https://psykristel.com`).
+3. **Settings → Environment Variables** → `NEXT_PUBLIC_SITE_URL` на проді
+   задавати не треба. Якщо змінна там уже є — приберіть її: канонічну адресу
+   код бере з `canonicalHost` у `lib/site.ts`.
 4. **Settings → Domains** → підключіть домен і пропишіть у реєстратора DNS-записи,
-   які покаже Vercel.
-5. Після зміни домену зробіть **Redeploy**, щоб canonical, `sitemap.xml` і
-   Open Graph перегенерувалися з новою адресою.
+   які покаже Vercel. Основним (Primary) має бути рівно той хост, що в
+   `canonicalHost`; решта — з редиректом на нього, інакше canonical
+   вказуватиме на адресу, яка редиректить.
+5. Після зміни домену оновіть `canonicalHost` і зробіть **Redeploy**, щоб
+   canonical, `sitemap.xml` і Open Graph перегенерувалися з новою адресою.
 
 Далі кожен `git push` у `main` автоматично оновлює продакшн, а пул-реквести
 отримують окремі превʼю-посилання.

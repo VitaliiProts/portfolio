@@ -82,10 +82,9 @@ export const metadata: Metadata = {
     description: 'Терапія РХП, тривоги та панічних атак. Онлайн і Київ. Запис у Telegram.',
     images: [site.ogImage],
   },
-  icons: {
-    icon: site.ogImage,
-    apple: site.ogImage,
-  },
+  // Іконки не оголошуємо тут навмисно: їх підхоплюють файлові конвенції
+  // (app/icon.svg, app/apple-icon.png, app/favicon.ico). Явний `icons`
+  // перекрив би їх цілком.
   category: 'health',
 };
 

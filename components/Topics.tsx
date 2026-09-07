@@ -11,8 +11,9 @@ export function Topics() {
       <div className={`wrap ${styles.inner}`}>
         <div>
           <p className="eyebrow">Коли варто прийти</p>
+          {/* Пробіл перед <br> — інакше в екстрагованому тексті «можудопомогти». */}
           <h2 id="topics-title">
-            З чим я можу
+            З чим я можу{' '}
             <br />
             допомогти<span className="dot">.</span>
           </h2>

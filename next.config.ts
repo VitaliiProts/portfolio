@@ -1,8 +1,13 @@
 import type { NextConfig } from 'next';
 import { canonicalHost } from './lib/site';
 
-/** Канонічний домен і його www-версія, яка редиректить на нього. */
-const canonicalHostPattern = `(www\\.)?${canonicalHost.replace(/\./g, '\\.')}`;
+/**
+ * Канонічний хост разом з apex-версією, яка на нього редиректить. Патерн
+ * будуємо від apex, бо `canonicalHost` уже містить `www.` — інакше вийшло б
+ * `(www\.)?www\.psykristel\.com` і apex помилково потрапляв би під noindex.
+ */
+const apexHost = canonicalHost.replace(/^www\./, '');
+const knownHostPattern = `(www\\.)?${apexHost.replace(/\./g, '\\.')}`;
 
 /** Секції головної, доступні за чистими URL (`/about`, `/pricing` тощо). */
 const sectionIds = [
@@ -41,7 +46,7 @@ const nextConfig: NextConfig = {
         // Усе, що не канонічний домен (адреси *.vercel.app, прев'ю, майбутні
         // аліаси), лишається поза індексом — щоб у пошуку був один сайт.
         source: '/:path*',
-        missing: [{ type: 'host', value: canonicalHostPattern }],
+        missing: [{ type: 'host', value: knownHostPattern }],
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
     ];

@@ -13,10 +13,27 @@ export const canonicalHost = 'www.psykristel.com';
 /**
  * Навмисно не підставляємо адресу деплою Vercel: canonical, sitemap і
  * Open Graph мають вести на канонічний домен навіть із прев'ю-деплоя.
+ *
+ * NEXT_PUBLIC_SITE_URL лишається override для локального запуску, але адресу
+ * на іншому хості ігноруємо. Інакше достатньо один раз вписати в оточення apex
+ * замість www — і прод почне віддавати canonical на домен, який редиректить
+ * назад на нього ж.
  */
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL || `https://${canonicalHost}`
-).replace(/\/$/, '');
+function resolveSiteUrl(): string {
+  const fallback = `https://${canonicalHost}`;
+  const override = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '');
+  if (!override) return fallback;
+
+  try {
+    const { hostname } = new URL(override);
+    const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+    return hostname === canonicalHost || isLocal ? override : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+export const siteUrl = resolveSiteUrl();
 
 /** Пошуковикам відкритий лише продакшн; прев'ю-деплої лишаються поза індексом. */
 export const isIndexable = (process.env.VERCEL_ENV ?? 'production') === 'production';
