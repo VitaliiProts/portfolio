@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check:tests": "tsx scripts/check-tests.ts"
+    "check:tests": "tsx scripts/check-tests.ts",
+    "check:topics": "tsx scripts/check-topics.ts"
   },
   "dependencies": {
     "@amplitude/unified": "^1.1.28",
