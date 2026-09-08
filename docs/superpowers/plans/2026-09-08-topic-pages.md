@@ -329,12 +329,14 @@ import type { TopicDefinition } from './types';
 export const topics: readonly TopicDefinition[] = [];
 
 /**
- * У проді показуємо лише опубліковані теми. Локально й на превʼю-деплоях —
- * усі: превʼю віддає X-Robots-Tag: noindex (див. next.config.ts), тож чернетка
- * не потрапить в індекс, а прапорець не доводиться перемикати заради показу.
+ * Чернетки ховаємо лише на проді. Порівнюємо з 'production' напряму, без
+ * підстановки за замовчуванням: коли VERCEL_ENV не заданий — тобто локально —
+ * теми мають бути видні, інакше сторінку неможливо відкрити до публікації.
+ * На превʼю-деплоях чернетки теж видно, але весь превʼю віддає
+ * X-Robots-Tag: noindex (див. next.config.ts), тож в індекс вони не потраплять.
  */
 export function visibleTopics(): readonly TopicDefinition[] {
-  const isProduction = (process.env.VERCEL_ENV ?? 'production') === 'production';
+  const isProduction = process.env.VERCEL_ENV === 'production';
   return isProduction ? topics.filter((topic) => topic.published) : topics;
 }
 
