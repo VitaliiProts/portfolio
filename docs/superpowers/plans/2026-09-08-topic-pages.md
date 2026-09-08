@@ -666,15 +666,15 @@ export const topics: readonly TopicDefinition[] = [eatingDisorders];
 Run: `npm run check:topics`
 Expected: `Усі перевірки пройдено (тем у реєстрі: 1).` Перевірки обсягу не запускаються, бо `published: false`.
 
-- [ ] **Step 6: Перевірити обсяг вручну, тимчасово ввімкнувши прапорець**
+- [ ] **Step 6: Перевірити обсяг чернетки**
 
 ```bash
-sed -i '' 's/published: false/published: true/' lib/topics/eating-disorders.ts
-npm run check:topics
-sed -i '' 's/published: true/published: false/' lib/topics/eating-disorders.ts
+npx tsx scripts/check-topics.ts --drafts
 ```
 
-Expected: у ввімкненому стані рядок `ok   eating-disorders: <N> слів, <M> FAQ, 4 відгуків` без жодного FAIL. Якщо слів менше 1000 — дописати текст і повторити.
+Expected: рядок `ok   eating-disorders: <N> слів, <M> FAQ, 4 відгуків` без жодного FAIL. Якщо слів менше 1000 — дописати текст і повторити.
+
+Прапорці `published` руками не перемикаємо: забутий `published: true` поїхав би в прод разом із недописаною чернеткою. `--drafts` міряє те саме, не торкаючись файлів.
 
 - [ ] **Step 7: Коміт**
 
