@@ -1784,7 +1784,9 @@ export const footerTopics: readonly NavItem[] = [
 ];
 ```
 
-Саме тому Task 9 виконується після Task 10: до нього тем `/anxiety-and-panic-attacks` і `/teens` немає навіть у реєстрі. Оскільки в проді `visibleTopics()` віддає лише опубліковані теми, перед мерджем у `main` треба переконатися, що всі три адреси опубліковані — інакше тимчасово повернути відповідні пункти на `/services` (перевірка в Task 11, Step 5).
+Саме тому Task 9 виконується після Task 10: до нього тем `/anxiety-and-panic-attacks` і `/teens` немає навіть у реєстрі.
+
+Пункти тем задаються через `topicSlug`, а не готовий href, і `Footer` підставляє `/services`, поки `getTopic()` не бачить теми. Так футер не може повести в 404 незалежно від того, що опубліковано на момент мерджу — покладатися на ручну перевірку перед деплоєм тут не варто.
 
 - [ ] **Step 6: Перевірити**
 
@@ -2037,9 +2039,9 @@ git commit -m "content: публікація сторінки <тема>"
 
 Порядок публікації: `eating-disorders` першою, бо на неї посилаються діти.
 
-- [ ] **Step 5: Перевірити готовність футера перед мерджем**
+- [ ] **Step 5: Перевірити, що на головній немає 404**
 
-`footerTopics` (Task 9, Step 5) посилається на `/eating-disorders`, `/anxiety-and-panic-attacks`, `/teens`. Якщо якась із трьох ще не опублікована, тимчасово замінити її href на `/services`.
+Ручна підміна href у футері більше не потрібна: пункти `footerTopics` задаються через `topicSlug`, і `Footer` сам веде їх на `/services`, доки `getTopic()` не бачить теми. Крок лишається як перевірка, а не як правка.
 
 Run: `npm run build && npm run start & sleep 4; for p in $(curl -s localhost:3000 | grep -o 'href="/[a-z-]*"' | sort -u | sed 's/href="//;s/"//'); do curl -s -o /dev/null -w "%{http_code} $p\n" "localhost:3000$p"; done; kill %1`
 Expected: жодного `404`.
