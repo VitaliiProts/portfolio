@@ -5,10 +5,12 @@
  */
 import { faq as siteFaq, reviewsByTags } from '../lib/content';
 import { testSlugs } from '../lib/tests';
-import { REQUIRED_SECTION_IDS, topics } from '../lib/topics';
-import type { TopicDefinition } from '../lib/topics/types';
+import { REQUIRED_SECTION_IDS, topics, type TopicDefinition } from '../lib/topics';
 
-/** Збігається з sectionIds у next.config.ts: ці шляхи зайняті rewrite-ами. */
+/**
+ * Шляхи, зайняті rewrite-ами (sectionIds у next.config.ts) та статичними
+ * маршрутами на кшталт /tests. Якщо sectionIds змінюється — оновіть і цей список.
+ */
 const RESERVED_SLUGS = [
   'about',
   'certs',
@@ -21,6 +23,9 @@ const RESERVED_SLUGS = [
   'privacy',
   'tests',
 ];
+
+/** Без початкових, кінцевих і подвоєних дефісів — те саме правило для slug і для id секцій. */
+const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 // Збіг slug теми зі slug тесту не забороняємо: `/binge-eating` і
 // `/tests/binge-eating` — різні шляхи, колізії маршрутів не виникає.
@@ -37,8 +42,13 @@ function expect(condition: boolean, message: string): void {
   fail(message);
 }
 
+/** U+02BC належить до \p{L}, тож апостроф прибираємо окремо: у текстах трапляються обидва накреслення. */
 function normalize(question: string): string {
-  return question.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  return question
+    .toLowerCase()
+    .replace(/[\u02BC]/gu, '')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
 }
 
 function wordCount(topic: TopicDefinition): number {
@@ -51,7 +61,11 @@ function wordCount(topic: TopicDefinition): number {
     }
   }
 
-  return texts.join(' ').split(/\s+/).filter(Boolean).length;
+  // Тире й лапки окремими токенами не рахуємо: інакше поріг обсягу занижується.
+  return texts
+    .join(' ')
+    .split(/\s+/)
+    .filter((token) => /[\p{L}\p{N}]/u.test(token)).length;
 }
 
 console.log('--- структура ---');
@@ -64,19 +78,27 @@ for (const item of siteFaq) {
 }
 
 for (const topic of topics) {
-  const at = `${topic.slug}`;
+  const at = topic.slug;
 
   expect(!seenSlugs.has(topic.slug), `${at}: slug дублюється`);
   seenSlugs.add(topic.slug);
 
   expect(!RESERVED_SLUGS.includes(topic.slug), `${at}: slug зайнятий rewrite-ом або маршрутом`);
-  expect(/^[a-z][a-z0-9-]*$/.test(topic.slug), `${at}: slug має бути латиницею через дефіс`);
-  expect(/^\d{4}-\d{2}-\d{2}$/.test(topic.updatedAt), `${at}: updatedAt має бути ISO-датою`);
+  expect(SLUG_PATTERN.test(topic.slug), `${at}: slug має бути латиницею через дефіс`);
+  expect(
+    /^\d{4}-\d{2}-\d{2}$/.test(topic.updatedAt) && !Number.isNaN(Date.parse(topic.updatedAt)),
+    `${at}: updatedAt має бути коректною ISO-датою`,
+  );
 
   if (topic.parent) {
+    const parent = topics.find((candidate) => candidate.slug === topic.parent);
+
+    expect(parent !== undefined, `${at}: parent «${topic.parent}» не існує`);
+    expect(topic.parent !== topic.slug, `${at}: тема не може бути власним батьком`);
+    // Ієрархія рівно на один рівень: хаб і його діти, без онуків.
     expect(
-      topics.some((candidate) => candidate.slug === topic.parent),
-      `${at}: parent «${topic.parent}» не існує`,
+      parent?.parent === undefined,
+      `${at}: parent «${topic.parent}» сам має батька — глибша вкладеність не підтримується`,
     );
   }
 
@@ -96,13 +118,14 @@ for (const topic of topics) {
 
   for (const section of topic.sections) {
     expect(section.blocks.length > 0, `${at}/${section.id}: порожня секція`);
+    expect(SLUG_PATTERN.test(section.id), `${at}/${section.id}: id секції має бути латиницею`);
   }
 }
 
 console.log('--- опубліковані сторінки ---');
 
 for (const topic of topics.filter((item) => item.published)) {
-  const at = `${topic.slug}`;
+  const at = topic.slug;
   // Хаб оглядає кілька розладів одразу, тому вимога до обсягу вища.
   const isHub = topics.some((candidate) => candidate.parent === topic.slug);
   const minimum = isHub ? 1000 : 800;
@@ -126,6 +149,15 @@ for (const topic of topics.filter((item) => item.published)) {
     const owner = seenQuestions.get(key);
     expect(owner === undefined, `${at}: питання «${item.question}» вже є (${owner})`);
     seenQuestions.set(key, at);
+  }
+
+  if (topic.parent) {
+    const parent = topics.find((candidate) => candidate.slug === topic.parent);
+    // Інакше на проді крихта опублікованої дитини вела б у 404.
+    expect(
+      parent?.published === true,
+      `${at}: батьківська тема «${topic.parent}» не опублікована`,
+    );
   }
 
   const matched = reviewsByTags(topic.reviewTags).length;
