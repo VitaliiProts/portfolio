@@ -1,7 +1,30 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { topics } from '@/lib/content';
-import { AccordionList } from './AccordionList';
+import { getTopic, topicPath, topics as topicRegistry } from '@/lib/topics';
 import styles from './Topics.module.css';
+
+/** Пункт акордеону → сторінка теми. Пункти без сторінки лишаються текстом. */
+const TOPIC_SLUGS: Record<string, string | undefined> = {
+  'РХП — розлади харчової поведінки': 'eating-disorders',
+  'Тривога та тривожні розлади': 'anxiety-and-panic-attacks',
+};
+
+/*
+ * Ключ мапи має дослівно збігатися з question у lib/content.ts, а значення —
+ * зі slug у реєстрі тем. Розбіжність мовчки перетворила б картку на текст без
+ * посилання, тому хибний запис валить збірку, а не чекає, поки його помітять.
+ * Звіряємо з повним реєстром, а не з visibleTopics(): чернетка на проді — не
+ * помилка мапи, її ховає getTopic().
+ */
+for (const [question, slug] of Object.entries(TOPIC_SLUGS)) {
+  if (!topics.some((item) => item.question === question)) {
+    throw new Error(`Topics: ключа «${question}» немає серед пунктів topics у lib/content.ts`);
+  }
+  if (!topicRegistry.some((topic) => topic.slug === slug)) {
+    throw new Error(`Topics: slug «${slug}» відсутній у реєстрі lib/topics`);
+  }
+}
 
 export function Topics() {
   return (
@@ -21,7 +44,25 @@ export function Topics() {
             Не обов&#8217;язково чекати, поки стане нестерпно. Ось із чим найчастіше звертаються.
           </p>
 
-          <AccordionList items={topics} defaultOpenFirst />
+          <ul className={styles.topics}>
+            {topics.map((item) => {
+              const slug = TOPIC_SLUGS[item.question];
+              const topic = slug ? getTopic(slug) : undefined;
+
+              return (
+                <li key={item.question}>
+                  {topic ? (
+                    <Link href={topicPath(topic.slug)} className={styles.topicLink}>
+                      {topic.h1}
+                    </Link>
+                  ) : (
+                    <span className={styles.topicName}>{item.question}</span>
+                  )}
+                  <p>{item.answer}</p>
+                </li>
+              );
+            })}
+          </ul>
 
           <div className={`btns ${styles.actions}`}>
             <a href="#contact" className="btn btn-fill">

@@ -1,6 +1,7 @@
 import { credentials, faq, plans, topics } from '@/lib/content';
 import { formatPrice, prices, site } from '@/lib/site';
 import { questionsLabel, testPath, tests, testsHubPath } from '@/lib/tests';
+import { topicPath, visibleTopics } from '@/lib/topics';
 
 /** Файл віддається як статика разом із рештою збірки. */
 export const dynamic = 'force-static';
@@ -56,7 +57,20 @@ function buildLlmsTxt(): string {
     `- [Психологічні тести](${url(
       testsHubPath,
     )}): добірка безкоштовних скринінгових методик із поясненням результату.`,
+    ...visibleTopics().map(
+      (topic) => `- [${topic.h1}](${url(topicPath(topic.slug))}): ${topic.description}`,
+    ),
     '',
+    '## Теми',
+    '',
+    ...visibleTopics().flatMap((topic) => [
+      `### [${topic.h1}](${url(topicPath(topic.slug))})`,
+      '',
+      topic.lead,
+      '',
+      ...topic.faq.flatMap((item) => [`- ${item.question} ${item.answer}`]),
+      '',
+    ]),
     '## Психологічні тести',
     '',
     ...tests.map(

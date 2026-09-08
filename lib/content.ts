@@ -489,9 +489,9 @@ export const footerSections: readonly NavItem[] = [
 ];
 
 export const footerTopics: readonly NavItem[] = [
-  { href: '/services', label: 'РХП · анорексія · булімія' },
-  { href: '/services', label: 'Тривога · панічні атаки' },
+  { href: '/eating-disorders', label: 'РХП · анорексія · булімія' },
+  { href: '/anxiety-and-panic-attacks', label: 'Тривога · панічні атаки' },
+  { href: '/teens', label: 'Підліткова терапія' },
   { href: '/services', label: 'Самооцінка · прийняття себе' },
-  { href: '/topics', label: 'Підліткова терапія' },
   { href: '/pricing', label: 'Онлайн-сесії' },
 ];
