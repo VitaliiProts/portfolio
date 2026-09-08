@@ -127,7 +127,7 @@ export const eatingDisorders: TopicDefinition = {
     },
     {
       id: 'format',
-      heading: 'Формат, тривалість і вартість',
+      heading: 'Формат, тривалість і оплата',
       blocks: [
         {
           type: 'paragraph',
