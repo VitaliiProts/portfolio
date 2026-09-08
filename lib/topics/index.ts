@@ -1,8 +1,20 @@
+import { anorexia } from './anorexia';
+import { anxietyAndPanicAttacks } from './anxiety-and-panic-attacks';
+import { bingeEating } from './binge-eating';
+import { bulimia } from './bulimia';
 import { eatingDisorders } from './eating-disorders';
+import { teens } from './teens';
 import type { TopicDefinition } from './types';
 
 /** Порядок визначає видачу в футері, sitemap і llms.txt. */
-export const topics: readonly TopicDefinition[] = [eatingDisorders];
+export const topics: readonly TopicDefinition[] = [
+  eatingDisorders,
+  anorexia,
+  bulimia,
+  bingeEating,
+  anxietyAndPanicAttacks,
+  teens,
+];
 
 /**
  * Чернетки ховаємо лише на проді. Порівнюємо з 'production' напряму, без
