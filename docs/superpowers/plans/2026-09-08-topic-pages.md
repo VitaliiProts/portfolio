@@ -1555,8 +1555,8 @@ import { topicPath, visibleTopics } from '@/lib/topics';
 export default function sitemap(): MetadataRoute.Sitemap {
   const topics = visibleTopics();
 
-  const latestTopicDate = topics
-    .map((topic) => topic.updatedAt)
+  const latestTestDate = tests
+    .map((test) => test.updatedAt)
     .sort()
     .at(-1);
 
@@ -1575,7 +1575,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     {
       url: `${site.url}${testsHubPath}`,
-      lastModified: new Date(latestTopicDate ?? site.updatedAt),
+      lastModified: new Date(latestTestDate ?? site.updatedAt),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
@@ -1589,7 +1589,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
-Хаб тестів власного контенту майже не має — він перелічує тести, тому його дата дорівнює найсвіжішій даті в реєстрах. Якщо тем ще немає, береться дата головної.
+Хаб тестів власного контенту майже не має — він перелічує тести, тому його дата дорівнює найсвіжішій даті в реєстрі тестів. Дати тем сюди не беруться: інакше правка будь-якої теми виглядала б як правка хаба тестів — рівно той шум, який ця задача прибирає.
 
 - [ ] **Step 5: Перевірити**
 

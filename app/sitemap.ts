@@ -7,8 +7,11 @@ import { topicPath, visibleTopics } from '@/lib/topics';
 export default function sitemap(): MetadataRoute.Sitemap {
   const topics = visibleTopics();
 
-  const latestTopicDate = topics
-    .map((topic) => topic.updatedAt)
+  // Хаб тестів власного контенту майже не має — він перелічує тести, тож
+  // змінюється рівно тоді, коли змінюється найсвіжіший із них. Дати тем сюди не
+  // беремо: інакше правка будь-якої теми виглядала б як правка хаба тестів.
+  const latestTestDate = tests
+    .map((test) => test.updatedAt)
     .sort()
     .at(-1);
 
@@ -27,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     {
       url: `${site.url}${testsHubPath}`,
-      lastModified: new Date(latestTopicDate ?? site.updatedAt),
+      lastModified: new Date(latestTestDate ?? site.updatedAt),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
