@@ -1,7 +1,8 @@
+import { eatingDisorders } from './eating-disorders';
 import type { TopicDefinition } from './types';
 
 /** Порядок визначає видачу в футері, sitemap і llms.txt. */
-export const topics: readonly TopicDefinition[] = [];
+export const topics: readonly TopicDefinition[] = [eatingDisorders];
 
 /**
  * Чернетки ховаємо лише на проді. Порівнюємо з 'production' напряму, без
