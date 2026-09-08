@@ -211,9 +211,9 @@ export function Reviews({
               <p>{review.quote}</p>
               <div className={styles.who}>
                 {review.author}
-                <small>
-                  {review.tags.join(' · ')} · оцінка {review.rating}/5
-                </small>
+                {/* Один рядок, а не кілька виразів: інакше React розбиває підпис
+                    на текстові вузли з коментарями-роздільниками в HTML. */}
+                <small>{`${review.tags.join(' · ')} · оцінка ${review.rating}/5`}</small>
               </div>
             </article>
           ))}
@@ -233,14 +233,15 @@ npm run typecheck && npm run lint && npm run build
 Expected: без помилок. Далі:
 
 ```bash
-npm run start &
-sleep 4
-curl -s localhost:3000 | grep -o 'Анорексія · РХП · оцінка 5/5' | head -1
-curl -s localhost:3000 | grep -o 'Тривога · оцінка 5/5' | head -1
+PORT=3111 npm run start &
+sleep 5
+curl -s localhost:3111 | grep -c 'Анорексія · оцінка 5/5'
+curl -s localhost:3111 | grep -c 'Булінг · вага · оцінка 5/5'
+curl -s localhost:3111 | grep -c 'Тривога · оцінка 5/5'
 kill %1
 ```
 
-Expected: обидва рядки знайдені — підписи рендеряться, оцінки на місці.
+Expected: тричі `1`. Підписи мають збігатися з нинішніми дослівно; порт нестандартний, бо 3000 часто зайнятий іншим застосунком.
 
 - [ ] **Step 6: Коміт**
 
