@@ -62,6 +62,7 @@ const control = (what: string): readonly Choice[] => [
 
 export const ybocs: TestDefinition = {
   slug: 'ocd',
+  updatedAt: '2026-08-16',
   title: 'Шкала Йеля-Брауна для оцінки симптомів ОКР',
   summary: 'Десять питань про нав’язливі думки та ритуали за останній тиждень.',
   source: 'Y-BOCS (Yale-Brown Obsessive Compulsive Scale), Goodman та ін., 1989 — шкала тяжкості, форма самозвіту',

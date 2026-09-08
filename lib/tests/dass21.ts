@@ -9,6 +9,7 @@ const choices: readonly Choice[] = [
 
 export const dass21: TestDefinition = {
   slug: 'dass21',
+  updatedAt: '2026-08-16',
   title: 'Опитувальник оцінки симптомів тривоги, депресії та стресу',
   summary: 'Двадцять одне твердження, три окремі шкали: депресія, тривога і стрес.',
   source: 'DASS-21 (Depression Anxiety Stress Scales), Lovibond & Lovibond, 1995',

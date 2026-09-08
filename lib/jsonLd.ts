@@ -2,6 +2,8 @@ import { faq, plans } from './content';
 import { prices, site } from './site';
 import { tests, testPath, testsHubPath } from './tests';
 import type { TestDefinition } from './tests/types';
+import { getTopic, topicPath } from './topics';
+import type { TopicDefinition } from './topics/types';
 
 /**
  * JSON-LD будується з тих самих даних, що й розмітка сторінки,
@@ -145,6 +147,50 @@ export function buildTestJsonLd(test: TestDefinition) {
         { name: 'Тести', path: testsHubPath },
         { name: test.title, path: testPath(test.slug) },
       ]),
+    ],
+  };
+}
+
+/**
+ * MedicalWebPage навмисно не використовуємо: вона передбачає reviewedBy й
+ * lastReviewed від медичного рецензента, якого в практики немає.
+ */
+export function buildTopicJsonLd(topic: TopicDefinition) {
+  const url = `${site.url}${topicPath(topic.slug)}`;
+  const parent = topic.parent ? getTopic(topic.parent) : undefined;
+
+  const trail = parent
+    ? [
+        { name: parent.h1, path: topicPath(parent.slug) },
+        { name: topic.h1, path: topicPath(topic.slug) },
+      ]
+    : [{ name: topic.h1, path: topicPath(topic.slug) }];
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#page`,
+        url,
+        name: topic.h1,
+        description: topic.description,
+        inLanguage: site.lang,
+        // updatedAt зберігається як YYYY-MM-DD — валідний ISO 8601 для schema.org.
+        dateModified: topic.updatedAt,
+        author,
+        about: { '@type': 'MedicalCondition', name: topic.h1 },
+      },
+      breadcrumbs(trail),
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: topic.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      },
     ],
   };
 }

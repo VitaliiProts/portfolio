@@ -11,6 +11,24 @@
 export const canonicalHost = 'www.psykristel.com';
 
 /**
+ * Секції головної, доступні за чистими URL (`/about`, `/pricing` тощо) через
+ * rewrite-и в next.config.ts. Живуть тут, а не в конфізі, бо той самий список
+ * потрібен `scripts/check-topics.ts`: тема з таким slug перекрила б секцію, а
+ * дві копії списку розійшлися б при першій же зміні.
+ */
+export const sectionIds = [
+  'about',
+  'certs',
+  'services',
+  'topics',
+  'faq',
+  'reviews',
+  'pricing',
+  'contact',
+  'privacy',
+] as const;
+
+/**
  * Навмисно не підставляємо адресу деплою Vercel: canonical, sitemap і
  * Open Graph мають вести на канонічний домен навіть із прев'ю-деплоя.
  *
@@ -48,6 +66,8 @@ export const site = {
   jobTitle: 'Психолог, фахівець з розладів харчової поведінки',
   locale: 'uk_UA',
   lang: 'uk',
+  /** Дата останньої змістовної правки головної. Оновлювати руками разом із текстом. */
+  updatedAt: '2026-09-07',
   themeColor: '#4A4F2D',
   ogImage: '/kristel-portrait.webp',
   telegramHandle: 'Krav_Kristel',

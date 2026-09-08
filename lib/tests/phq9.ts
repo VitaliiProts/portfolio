@@ -3,6 +3,7 @@ import type { TestDefinition } from './types';
 
 export const phq9: TestDefinition = {
   slug: 'depression',
+  updatedAt: '2026-08-16',
   title: 'Тест на депресію',
   summary: 'Дев’ять питань про настрій, сон, апетит і сили за останні два тижні.',
   source: 'PHQ-9 (Patient Health Questionnaire-9), Kroenke, Spitzer, Williams, 2001',

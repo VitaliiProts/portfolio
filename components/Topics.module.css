@@ -17,6 +17,36 @@
   margin-bottom: 44px;
 }
 
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.topicLink,
+.topicName {
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.topicLink {
+  border-bottom: 1px solid var(--line);
+  transition: 0.2s;
+}
+
+.topicLink:hover {
+  color: var(--clay);
+  border-color: var(--clay);
+}
+
+.topics li p {
+  margin-top: 6px;
+  font-size: 16px;
+  color: var(--olive);
+}
+
 .actions {
   margin-top: 40px;
 }

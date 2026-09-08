@@ -1,11 +1,19 @@
 'use client';
 
-import { reviews } from '@/lib/content';
+import { reviews as allReviews, type Review } from '@/lib/content';
 import { ChevronLeftIcon, ChevronRightIcon } from './icons';
 import { useCarousel } from './useCarousel';
 import styles from './Reviews.module.css';
 
-export function Reviews() {
+export function Reviews({
+  items = allReviews,
+  eyebrow = 'Відгуки клієнтів',
+  heading = 'Що кажуть клієнти',
+}: {
+  items?: readonly Review[];
+  eyebrow?: string;
+  heading?: string;
+} = {}) {
   const { railRef, scrollPrev, scrollNext, atStart, atEnd } = useCarousel<HTMLDivElement>(
     `.${styles.rev}`,
   );
@@ -15,9 +23,10 @@ export function Reviews() {
       <div className="wrap">
         <div className={styles.head}>
           <div>
-            <p className={`eyebrow ${styles.eyebrow}`}>Відгуки клієнтів</p>
+            <p className={`eyebrow ${styles.eyebrow}`}>{eyebrow}</p>
             <h2 id="reviews-title" className={styles.title}>
-              Що кажуть клієнти<span className="dot">.</span>
+              {heading}
+              <span className="dot">.</span>
             </h2>
           </div>
           <div className={styles.nav}>
@@ -42,8 +51,14 @@ export function Reviews() {
           </div>
         </div>
 
-        <div className={styles.rail} ref={railRef} tabIndex={0} role="group" aria-label="Відгуки клієнтів">
-          {reviews.map((review) => (
+        <div
+          className={styles.rail}
+          ref={railRef}
+          tabIndex={0}
+          role="group"
+          aria-label="Відгуки клієнтів"
+        >
+          {items.map((review) => (
             <article key={review.quote.slice(0, 40)} className={styles.rev}>
               <span className="stars" aria-hidden="true">
                 ★★★★★
@@ -51,7 +66,9 @@ export function Reviews() {
               <p>{review.quote}</p>
               <div className={styles.who}>
                 {review.author}
-                <small>{review.topic}</small>
+                {/* Один рядок, а не кілька виразів: інакше React розбиває підпис
+                    на текстові вузли з коментарями-роздільниками в HTML. */}
+                <small>{`${review.tags.join(' · ')} · оцінка ${review.rating}/5`}</small>
               </div>
             </article>
           ))}

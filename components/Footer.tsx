@@ -1,8 +1,17 @@
-import { footerSections, footerTopics } from '@/lib/content';
+import { type FooterTopic, footerSections, footerTopics } from '@/lib/content';
 import { site } from '@/lib/site';
+import { getTopic, topicPath } from '@/lib/topics';
 import { Logo } from './Logo';
 import { SocialLinks } from './SocialLinks';
 import styles from './Footer.module.css';
+
+/** Куди веде пункт, поки його тема ще не опублікована. */
+const DRAFT_FALLBACK = '/services';
+
+function topicHref(item: FooterTopic): string {
+  if (!('topicSlug' in item)) return item.href;
+  return getTopic(item.topicSlug) ? topicPath(item.topicSlug) : DRAFT_FALLBACK;
+}
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -36,7 +45,7 @@ export function Footer() {
             <ul>
               {footerTopics.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href}>{item.label}</a>
+                  <a href={topicHref(item)}>{item.label}</a>
                 </li>
               ))}
             </ul>

@@ -36,6 +36,7 @@ const yesNo: readonly Choice[] = [
 
 export const eat26: TestDefinition = {
   slug: 'eat26',
+  updatedAt: '2026-08-16',
   title: 'Тест на розлад харчової поведінки',
   summary: 'Двадцять шість тверджень про їжу й тіло та п’ять питань про поведінку.',
   source: 'EAT-26 (Eating Attitudes Test), Garner, Olmsted, Bohr, Garfinkel, 1982',

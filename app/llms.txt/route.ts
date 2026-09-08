@@ -1,6 +1,7 @@
 import { credentials, faq, plans, topics } from '@/lib/content';
 import { formatPrice, prices, site } from '@/lib/site';
 import { questionsLabel, testPath, tests, testsHubPath } from '@/lib/tests';
+import { topicPath, visibleTopics } from '@/lib/topics';
 
 /** Файл віддається як статика разом із рештою збірки. */
 export const dynamic = 'force-static';
@@ -15,6 +16,10 @@ function buildLlmsTxt(): string {
 
   const credentialLine = (item: (typeof credentials)[number]) =>
     `${item.prefix ?? ''}${item.strong}${item.rest ?? ''}`;
+
+  // У проді чернетки невидимі, і поки не опублікована жодна тема, розділ був би
+  // самим заголовком без тексту — для читача-LLM це шум, а не структура.
+  const pageTopics = visibleTopics();
 
   return [
     `# ${site.shortName} — ${site.jobTitle.toLowerCase()}`,
@@ -56,7 +61,24 @@ function buildLlmsTxt(): string {
     `- [Психологічні тести](${url(
       testsHubPath,
     )}): добірка безкоштовних скринінгових методик із поясненням результату.`,
+    ...pageTopics.map(
+      (topic) => `- [${topic.h1}](${url(topicPath(topic.slug))}): ${topic.description}`,
+    ),
     '',
+    ...(pageTopics.length > 0
+      ? [
+          '## Теми',
+          '',
+          ...pageTopics.flatMap((topic) => [
+            `### [${topic.h1}](${url(topicPath(topic.slug))})`,
+            '',
+            topic.lead,
+            '',
+            ...topic.faq.map((item) => `- ${item.question} ${item.answer}`),
+            '',
+          ]),
+        ]
+      : []),
     '## Психологічні тести',
     '',
     ...tests.map(

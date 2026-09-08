@@ -19,6 +19,7 @@ const dimensionBands = (low: string, mid: string, high: string): readonly Band[]
 
 export const ecrR: TestDefinition = {
   slug: 'attachment',
+  updatedAt: '2026-08-16',
   title: 'Тест на тип прив’язаності',
   summary: 'Тридцять шість тверджень про близькість, довіру й страх втрати у стосунках.',
   source: 'ECR-R (Experiences in Close Relationships-Revised), Fraley, Waller, Brennan, 2000',
