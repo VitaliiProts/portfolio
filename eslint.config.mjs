@@ -6,15 +6,16 @@ const config = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
-    rules: {
-      /**
-       * З появою app/[slug] правило вважає будь-який односегментний шлях
-       * сторінкою цього маршруту і хибно вимагає <Link> для навмисних <a> на
-       * секційні rewrite-адреси (/pricing, /contact тощо): воно не знає, що
-       * dynamicParams = false обмежує маршрут slug-ами тем.
-       */
-      '@next/next/no-html-link-for-pages': 'off',
-    },
+    /**
+     * З появою app/[slug] правило вважає будь-який односегментний шлях
+     * сторінкою цього маршруту і хибно вимагає <Link> для навмисних <a> на
+     * секційні rewrite-адреси (/pricing, /contact, /privacy): воно не знає, що
+     * dynamicParams = false обмежує маршрут slug-ами тем. Вимикаємо точково —
+     * для решти коду правило має й далі ловити справжні повні перезавантаження.
+     */
+    // Квадратні дужки в glob — це набір символів, тому шлях до [slug] задаємо через **.
+    files: ['app/tests/**/page.tsx', 'components/Footer.tsx', 'components/StickyCta.tsx'],
+    rules: { '@next/next/no-html-link-for-pages': 'off' },
   },
 ];
 
