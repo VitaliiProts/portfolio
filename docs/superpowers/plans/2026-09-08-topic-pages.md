@@ -373,10 +373,12 @@ export { REQUIRED_SECTION_IDS } from './types';
  */
 import { faq as siteFaq, reviewsByTags } from '../lib/content';
 import { testSlugs } from '../lib/tests';
-import { REQUIRED_SECTION_IDS, topics } from '../lib/topics';
-import type { TopicDefinition } from '../lib/topics/types';
+import { REQUIRED_SECTION_IDS, topics, type TopicDefinition } from '../lib/topics';
 
-/** Збігається з sectionIds у next.config.ts: ці шляхи зайняті rewrite-ами. */
+/**
+ * Шляхи, зайняті rewrite-ами (sectionIds у next.config.ts) та статичними
+ * маршрутами на кшталт /tests. Якщо sectionIds змінюється — оновіть і цей список.
+ */
 const RESERVED_SLUGS = [
   'about',
   'certs',
@@ -408,11 +410,15 @@ function expect(condition: boolean, message: string): void {
   fail(message);
 }
 
-/** U+02BC належить до \p{L}, тож апостроф прибираємо окремо: у текстах трапляються обидва накреслення. */
+/**
+ * U+02BC належить до \p{L}, тож наступний вираз його не зачепить. Замінюємо на
+ * пробіл — так само, як решту пунктуації, — інакше «привʼязаності» і
+ * «прив’язаності» дали б різні ключі.
+ */
 function normalize(question: string): string {
   return question
     .toLowerCase()
-    .replace(/[\u02BC]/gu, '')
+    .replace(/\u02BC/gu, ' ')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
 }
@@ -444,7 +450,7 @@ for (const item of siteFaq) {
 }
 
 for (const topic of topics) {
-  const at = `${topic.slug}`;
+  const at = topic.slug;
 
   expect(!seenSlugs.has(topic.slug), `${at}: slug дублюється`);
   seenSlugs.add(topic.slug);
@@ -491,7 +497,7 @@ for (const topic of topics) {
 console.log('--- опубліковані сторінки ---');
 
 for (const topic of topics.filter((item) => item.published)) {
-  const at = `${topic.slug}`;
+  const at = topic.slug;
   // Хаб оглядає кілька розладів одразу, тому вимога до обсягу вища.
   const isHub = topics.some((candidate) => candidate.parent === topic.slug);
   const minimum = isHub ? 1000 : 800;
