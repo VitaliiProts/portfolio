@@ -7,30 +7,21 @@
  * зміряти до публікації, не перемикаючи прапорці в файлах. Перемикання руками
  * небезпечне — забутий published: true поїхав би в прод разом із чернеткою.
  */
-import { faq as siteFaq, reviewsByTags } from "../lib/content";
-import { testSlugs } from "../lib/tests";
+import { faq as siteFaq, reviewsByTags } from '../lib/content';
+import { sectionIds } from '../lib/site';
+import { testSlugs } from '../lib/tests';
 import {
   REQUIRED_SECTION_IDS,
   topics,
   type TopicDefinition,
-} from "../lib/topics";
+} from '../lib/topics';
 
 /**
- * Шляхи, зайняті rewrite-ами (sectionIds у next.config.ts) та статичними
- * маршрутами на кшталт /tests. Якщо sectionIds змінюється — оновіть і цей список.
+ * Шляхи, зайняті rewrite-ами секцій і статичним сегментом /tests. Список секцій
+ * імпортуємо, а не копіюємо: інакше нова секція мовчки перестала б бути
+ * зарезервованою і тема з таким slug перекрила б її.
  */
-const RESERVED_SLUGS = [
-  "about",
-  "certs",
-  "services",
-  "topics",
-  "faq",
-  "reviews",
-  "pricing",
-  "contact",
-  "privacy",
-  "tests",
-];
+const RESERVED_SLUGS: readonly string[] = [...sectionIds, 'tests'];
 
 /** Без початкових, кінцевих і подвоєних дефісів — те саме правило для slug і для id секцій. */
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -58,8 +49,8 @@ function expect(condition: boolean, message: string): void {
 function normalize(question: string): string {
   return question
     .toLowerCase()
-    .replace(/\u02BC/gu, " ")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\u02BC/gu, ' ')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
 }
 
@@ -68,25 +59,25 @@ function wordCount(topic: TopicDefinition): number {
 
   for (const section of topic.sections) {
     for (const block of section.blocks) {
-      if (block.type === "list") texts.push(...block.items);
+      if (block.type === 'list') texts.push(...block.items);
       else texts.push(block.text);
     }
   }
 
   // Тире й лапки окремими токенами не рахуємо: інакше поріг обсягу занижується.
   return texts
-    .join(" ")
+    .join(' ')
     .split(/\s+/)
     .filter((token) => /[\p{L}\p{N}]/u.test(token)).length;
 }
 
-console.log("--- структура ---");
+console.log('--- структура ---');
 
 const seenSlugs = new Set<string>();
 const seenQuestions = new Map<string, string>();
 
 for (const item of siteFaq) {
-  seenQuestions.set(normalize(item.question), "головна");
+  seenQuestions.set(normalize(item.question), 'головна');
 }
 
 for (const topic of topics) {
@@ -132,8 +123,8 @@ for (const topic of topics) {
   const requiredIds: readonly string[] = REQUIRED_SECTION_IDS;
   const required = sectionIds.filter((id) => requiredIds.includes(id));
   expect(
-    required.join(",") === REQUIRED_SECTION_IDS.join(","),
-    `${at}: обов'язкові секції відсутні або в іншому порядку (маємо ${required.join(",") || "—"})`,
+    required.join(',') === REQUIRED_SECTION_IDS.join(','),
+    `${at}: обов'язкові секції відсутні або в іншому порядку (маємо ${required.join(',') || '—'})`,
   );
 
   expect(
@@ -150,12 +141,12 @@ for (const topic of topics) {
   }
 }
 
-const includeDrafts = process.argv.includes("--drafts");
+const includeDrafts = process.argv.includes('--drafts');
 
 console.log(
   includeDrafts
-    ? "--- усі сторінки, разом із чернетками ---"
-    : "--- опубліковані сторінки ---",
+    ? '--- усі сторінки, разом із чернетками ---'
+    : '--- опубліковані сторінки ---',
 );
 
 for (const topic of topics.filter((item) => includeDrafts || item.published)) {
@@ -211,7 +202,7 @@ for (const topic of topics.filter((item) => includeDrafts || item.published)) {
   if (topic.requiresSafetyNote) {
     const hasSafety = topic.sections.some((section) =>
       section.blocks.some(
-        (block) => block.type === "callout" && block.tone === "safety",
+        (block) => block.type === 'callout' && block.tone === 'safety',
       ),
     );
     expect(hasSafety, `${at}: відсутній callout безпеки`);

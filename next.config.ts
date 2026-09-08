@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next';
-import { canonicalHost } from './lib/site';
+import { canonicalHost, sectionIds } from './lib/site';
 
 /**
  * Канонічний хост разом з apex-версією, яка на нього редиректить. Патерн
@@ -8,19 +8,6 @@ import { canonicalHost } from './lib/site';
  */
 const apexHost = canonicalHost.replace(/^www\./, '');
 const knownHostPattern = `(www\\.)?${apexHost.replace(/\./g, '\\.')}`;
-
-/** Секції головної, доступні за чистими URL (`/about`, `/pricing` тощо). */
-const sectionIds = [
-  'about',
-  'certs',
-  'services',
-  'topics',
-  'faq',
-  'reviews',
-  'pricing',
-  'contact',
-  'privacy',
-];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
