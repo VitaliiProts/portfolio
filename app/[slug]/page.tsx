@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { JsonLd } from '@/components/JsonLd';
 import { TopicPage } from '@/components/topics/TopicPage';
+import { buildTopicJsonLd } from '@/lib/jsonLd';
 import { getTopic, topicPath, visibleTopics } from '@/lib/topics';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -35,5 +37,10 @@ export default async function Page({ params }: Props) {
   const topic = getTopic(slug);
   if (!topic) notFound();
 
-  return <TopicPage topic={topic} />;
+  return (
+    <>
+      <JsonLd data={buildTopicJsonLd(topic)} />
+      <TopicPage topic={topic} />
+    </>
+  );
 }
