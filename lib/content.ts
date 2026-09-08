@@ -488,10 +488,17 @@ export const footerSections: readonly NavItem[] = [
   { href: '/contact', label: 'Контакти' },
 ];
 
-export const footerTopics: readonly NavItem[] = [
-  { href: '/eating-disorders', label: 'РХП · анорексія · булімія' },
-  { href: '/anxiety-and-panic-attacks', label: 'Тривога · панічні атаки' },
-  { href: '/teens', label: 'Підліткова терапія' },
+/**
+ * Пункт із `topicSlug` веде на сторінку теми лише поки вона видима. Доки тема —
+ * чернетка, футер підставляє запасну адресу: інакше на проді посилання вело б
+ * у 404. Slug тут, а не готовий href, щоб не тримати ту саму адресу двічі.
+ */
+export type FooterTopic = { label: string; href: string } | { label: string; topicSlug: string };
+
+export const footerTopics: readonly FooterTopic[] = [
+  { topicSlug: 'eating-disorders', label: 'РХП · анорексія · булімія' },
+  { topicSlug: 'anxiety-and-panic-attacks', label: 'Тривога · панічні атаки' },
+  { topicSlug: 'teens', label: 'Підліткова терапія' },
   { href: '/services', label: 'Самооцінка · прийняття себе' },
   { href: '/pricing', label: 'Онлайн-сесії' },
 ];
