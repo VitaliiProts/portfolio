@@ -54,6 +54,8 @@ export type QuadrantRule = {
 
 export type TestDefinition = {
   slug: string;
+  /** ISO-дата останньої змістовної правки сторінки тесту. */
+  updatedAt: string;
   /** H1 сторінки й назва картки на хабі. */
   title: string;
   /** Один рядок про суть тесту — для картки на хабі. */

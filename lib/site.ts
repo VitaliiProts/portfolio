@@ -48,6 +48,8 @@ export const site = {
   jobTitle: 'Психолог, фахівець з розладів харчової поведінки',
   locale: 'uk_UA',
   lang: 'uk',
+  /** Дата останньої змістовної правки головної. Оновлювати руками разом із текстом. */
+  updatedAt: '2026-09-07',
   themeColor: '#4A4F2D',
   ogImage: '/kristel-portrait.webp',
   telegramHandle: 'Krav_Kristel',

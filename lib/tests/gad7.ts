@@ -3,6 +3,7 @@ import type { TestDefinition } from './types';
 
 export const gad7: TestDefinition = {
   slug: 'anxiety',
+  updatedAt: '2026-08-16',
   title: 'Тест на тривожність',
   summary: 'Сім питань про те, наскільки тривога втручалася у ваші останні два тижні.',
   source: 'GAD-7 (Generalized Anxiety Disorder-7), Spitzer, Kroenke, Williams, Löwe, 2006',

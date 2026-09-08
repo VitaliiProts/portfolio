@@ -3,6 +3,7 @@ import type { TestDefinition } from './types';
 /** Кожен пункт BES має власний набір тверджень із вагами 0–3 (у двох пунктах — 0–2). */
 export const bes: TestDefinition = {
   slug: 'binge-eating',
+  updatedAt: '2026-08-16',
   title: 'Тест на компульсивне переїдання',
   summary: 'Шістнадцять груп тверджень про зриви, контроль і думки навколо їжі.',
   source: 'BES (Binge Eating Scale), Gormally, Black, Daston, Rardin, 1982',
