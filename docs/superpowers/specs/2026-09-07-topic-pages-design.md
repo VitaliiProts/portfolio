@@ -29,7 +29,7 @@ ChatGPT-пошуку його представляють каталоги (HoldY
 | Адреси | плоскі англійські slug-и: `/eating-disorders`, `/anorexia`, `/bulimia`, `/binge-eating`, `/anxiety-and-panic-attacks`, `/teens` | збіг із конвенцією `/tests/anxiety`; ієрархія живе в даних і крихтах, не в URL |
 | Архітектура | реєстр `lib/topics/*` + один динамічний маршрут `app/[slug]` | одне джерело для сторінок, sitemap, крихт, карток на головній, футера і `llms.txt`; повтор патерну `lib/tests` → `app/tests/[slug]` |
 | Формат тексту | структуровані TS-об'єкти (секції з блоками), без MDX і HTML у рядках | одна система контенту з `lib/content.ts`; MDX можна додати як формат поля пізніше, не ламаючи реєстр |
-| Публікація | прапорець `published` у реєстрі; чернетка не збирається і не потрапляє в жодну інтеграцію | сторінка виходить лише після явного «ок» Крістель; превʼю — через Vercel preview-деплой гілки |
+| Публікація | прапорець `published` у реєстрі; у проді чернетка не збирається і не потрапляє в жодну інтеграцію | сторінка виходить лише після явного «ок» Крістель; превʼю — через Vercel preview-деплой гілки |
 | Перевірка контенту | `scripts/check-topics.ts`, без тестового фреймворку | у проєкті вже є такий патерн (`check-tests.ts`); інваріанти контенту мають ламати збірку |
 
 ## Обсяг
@@ -66,8 +66,8 @@ Rewrite-и секцій мають пріоритет над динамічни�
 ```
 lib/topics/
   types.ts                     TopicDefinition, TopicSection, TopicBlock
-  index.ts                     topics, publishedTopics(), getTopic(), topicPath(),
-                               children(), siblings()
+  index.ts                     topics, visibleTopics(), getTopic(), topicPath(),
+                               childrenOf(), siblingsOf()
   eating-disorders.ts
   anorexia.ts
   bulimia.ts
@@ -191,17 +191,20 @@ type Review = { quote: string; author: string; tags: readonly ReviewTag[]; ratin
 
 | Файл | Що робить |
 | --- | --- |
-| `app/sitemap.ts` | додає `publishedTopics()`: хаб `priority 0.8`, решта `0.7`; `lastModified` = `updatedAt` |
+| `app/sitemap.ts` | додає `visibleTopics()`: хаб `priority 0.8`, решта `0.7`; `lastModified` = `updatedAt` |
 | `lib/jsonLd.ts` → `buildTopicJsonLd(topic)` | `@graph`: `WebPage` (з `about: { @type: 'MedicalCondition', name }` для діагнозів), `BreadcrumbList`, `FAQPage` з `topic.faq` |
 | `components/Topics.tsx` | акордеон стає списком карток; пункти, що мають опубліковану сторінку, — посилання з анкором = `h1`; решта — текст без посилання |
-| `components/Footer.tsx` | нова колонка «З чим працюю» з опублікованими темами |
+| `lib/content.ts` → `footerTopics` | колонка у футері вже існує і веде на `/services` та `/topics`; її пункти перенаправляються на реальні сторінки. `components/Footer.tsx` не змінюється |
 | `app/llms.txt/route.ts` | розділ «Теми»: `title`, `lead`, URL і FAQ кожної опублікованої теми |
-| `app/[slug]/page.tsx` | `generateStaticParams` з `publishedTopics()`; `dynamicParams = false` |
+| `app/[slug]/page.tsx` | `generateStaticParams` з `visibleTopics()`; `dynamicParams = false` |
 
 `app/robots.ts` не змінюється.
 
-Неопублікована тема не потрапляє в жодну з шести точок і віддає 404. Для превʼю
-використовується Vercel preview-деплой feature-гілки, де прапорець уже `true`.
+У проді неопублікована тема не потрапляє в жодну з шести точок і віддає 404.
+Прапорці для превʼю руками не перемикаються: `visibleTopics()` віддає всі теми,
+коли `VERCEL_ENV !== 'production'`, тож чернетки видно локально й на
+preview-деплої гілки. Превʼю цілком віддає `X-Robots-Tag: noindex`
+(див. `next.config.ts`), тож у індекс чернетка не потрапить.
 
 Схема `MedicalWebPage` не використовується навмисно: вона тягне очікування
 `reviewedBy`/`lastReviewed` від медичного рецензента, яких на сайті немає.
@@ -225,7 +228,8 @@ DSM-5 у переказі побутовою мовою, без цифр пош�
   та інших тем.
 - `title` ≤ 60, `description` ≤ 155 знаків, `h1 !== title`.
 - Callout безпеки там, де `requiresSafetyNote`.
-- `reviewTags` дають ≥ 2 відгуки.
+- `reviewTags` дають ≥ 2 відгуки для хаба й сторінок без `parent`, ≥ 1 для
+  дочірніх: тегів «Анорексія», «Булімія» й «Переїдання» — по одному відгуку.
 - Кожен slug у `tests` існує; `parent` вказує на існуючу тему.
 
 ### Процес
@@ -263,7 +267,9 @@ DSM-5 у переказі побутовою мовою, без цифр пош�
 «Вимоги до опублікованої сторінки» по реєстру і завершується ненульовим кодом при
 порушенні. Перевірки slug-ів, `parent`, `tests`, порядку секцій і callout-ів —
 для всіх тем; перевірки довжини тексту, FAQ і відгуків — лише для
-`published: true`, щоб чернетки не блокували роботу.
+`published: true`, щоб чернетки не блокували роботу. Щоб зміряти чернетку до
+публікації, є `npx tsx scripts/check-topics.ts --drafts`: ті самі перевірки для
+всіх тем, без правки прапорців у файлах.
 
 Ручна перевірка перед мерджем кожної опублікованої сторінки:
 
