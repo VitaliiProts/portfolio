@@ -1,6 +1,8 @@
 import { Breadcrumbs, type Crumb } from '@/components/Breadcrumbs';
 import { getTopic, type TopicDefinition, topicPath } from '@/lib/topics';
 import { TopicBody } from './TopicBody';
+import { TopicRelated } from './TopicRelated';
+import { TopicTests } from './TopicTests';
 import { TopicToc } from './TopicToc';
 import styles from './TopicPage.module.css';
 
@@ -26,6 +28,8 @@ export function TopicPage({ topic }: { topic: TopicDefinition }) {
 
         <TopicToc sections={topic.sections} />
         <TopicBody sections={topic.sections} />
+        <TopicRelated topic={topic} />
+        <TopicTests slugs={topic.tests} />
       </div>
     </article>
   );
