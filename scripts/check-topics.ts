@@ -42,11 +42,15 @@ function expect(condition: boolean, message: string): void {
   fail(message);
 }
 
-/** U+02BC належить до \p{L}, тож апостроф прибираємо окремо: у текстах трапляються обидва накреслення. */
+/**
+ * U+02BC належить до \p{L}, тож наступний вираз його не зачепить. Замінюємо на
+ * пробіл — так само, як решту пунктуації, — інакше «привʼязаності» і
+ * «прив’язаності» дали б різні ключі.
+ */
 function normalize(question: string): string {
   return question
     .toLowerCase()
-    .replace(/[\u02BC]/gu, '')
+    .replace(/\u02BC/gu, ' ')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
 }
