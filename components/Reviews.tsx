@@ -66,9 +66,9 @@ export function Reviews({
               <p>{review.quote}</p>
               <div className={styles.who}>
                 {review.author}
-                <small>
-                  {review.tags.join(' · ')} · оцінка {review.rating}/5
-                </small>
+                {/* Один рядок, а не кілька виразів: інакше React розбиває підпис
+                    на текстові вузли з коментарями-роздільниками в HTML. */}
+                <small>{`${review.tags.join(' · ')} · оцінка ${review.rating}/5`}</small>
               </div>
             </article>
           ))}
