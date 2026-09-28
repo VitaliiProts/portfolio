@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { TestArticles } from '@/components/articles/TestArticles';
 import { JsonLd } from '@/components/JsonLd';
 import { TestRunner } from '@/components/tests/TestRunner';
 import { buildTestJsonLd } from '@/lib/jsonLd';
@@ -69,6 +70,8 @@ export default async function TestPage({ params }: Props) {
         </div>
 
         <TestRunner test={test} related={relatedTests(test.slug)} />
+
+        <TestArticles slug={test.slug} />
 
         <p className={styles.disclaimer}>
           Тест не ставить діагноз. Він показує рівень симптомів у моменті й не враховує вашої

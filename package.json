@@ -8,13 +8,14 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run check:tests && npm run check:topics",
+    "prebuild": "npm run check:tests && npm run check:topics && npm run check:articles",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check:tests": "tsx scripts/check-tests.ts",
-    "check:topics": "tsx scripts/check-topics.ts"
+    "check:topics": "tsx scripts/check-topics.ts",
+    "check:articles": "tsx scripts/check-articles.ts"
   },
   "dependencies": {
     "@amplitude/unified": "^1.1.28",

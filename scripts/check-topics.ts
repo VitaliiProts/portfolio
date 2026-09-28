@@ -21,7 +21,7 @@ import {
  * імпортуємо, а не копіюємо: інакше нова секція мовчки перестала б бути
  * зарезервованою і тема з таким slug перекрила б її.
  */
-const RESERVED_SLUGS: readonly string[] = [...sectionIds, 'tests'];
+const RESERVED_SLUGS: readonly string[] = [...sectionIds, 'tests', 'articles'];
 
 /** Без початкових, кінцевих і подвоєних дефісів — те саме правило для slug і для id секцій. */
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;

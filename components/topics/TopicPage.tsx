@@ -4,6 +4,7 @@ import { Pricing } from '@/components/Pricing';
 import { Reviews } from '@/components/Reviews';
 import { reviewsByTags } from '@/lib/content';
 import { getTopic, type TopicDefinition, topicPath } from '@/lib/topics';
+import { TopicArticles } from './TopicArticles';
 import { TopicBody } from './TopicBody';
 import { TopicCta } from './TopicCta';
 import { TopicRelated } from './TopicRelated';
@@ -37,6 +38,7 @@ export function TopicPage({ topic }: { topic: TopicDefinition }) {
           <TopicToc sections={topic.sections} />
           <TopicBody sections={topic.sections} />
           <TopicRelated topic={topic} />
+          <TopicArticles slug={topic.slug} />
           <TopicTests slugs={topic.tests} />
           <TopicCta message={topic.ctaMessage} />
         </div>

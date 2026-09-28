@@ -1,3 +1,4 @@
+import { articlePath, articlesHubPath, visibleArticles } from '@/lib/articles';
 import { credentials, faq, plans, topics } from '@/lib/content';
 import { formatPrice, prices, site } from '@/lib/site';
 import { questionsLabel, testPath, tests, testsHubPath } from '@/lib/tests';
@@ -20,6 +21,7 @@ function buildLlmsTxt(): string {
   // У проді чернетки невидимі, і поки не опублікована жодна тема, розділ був би
   // самим заголовком без тексту — для читача-LLM це шум, а не структура.
   const pageTopics = visibleTopics();
+  const pageArticles = visibleArticles();
 
   return [
     `# ${site.shortName} — ${site.jobTitle.toLowerCase()}`,
@@ -64,6 +66,17 @@ function buildLlmsTxt(): string {
     ...pageTopics.map(
       (topic) => `- [${topic.h1}](${url(topicPath(topic.slug))}): ${topic.description}`,
     ),
+    ...(pageArticles.length > 0
+      ? [
+          `- [Статті](${url(
+            articlesHubPath,
+          )}): статті про РХП, тривожність, привʼязаність і гештальт-терапію.`,
+          ...pageArticles.map(
+            (article) =>
+              `- [${article.h1}](${url(articlePath(article.slug))}): ${article.summary}`,
+          ),
+        ]
+      : []),
     '',
     ...(pageTopics.length > 0
       ? [
@@ -75,6 +88,20 @@ function buildLlmsTxt(): string {
             topic.lead,
             '',
             ...topic.faq.map((item) => `- ${item.question} ${item.answer}`),
+            '',
+          ]),
+        ]
+      : []),
+    ...(pageArticles.length > 0
+      ? [
+          '## Статті',
+          '',
+          ...pageArticles.flatMap((article) => [
+            `### [${article.h1}](${url(articlePath(article.slug))})`,
+            '',
+            article.lead,
+            '',
+            ...article.faq.map((item) => `- ${item.question} ${item.answer}`),
             '',
           ]),
         ]
