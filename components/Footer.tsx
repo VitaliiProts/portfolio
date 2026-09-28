@@ -1,3 +1,4 @@
+import { articlesHubPath, visibleArticles } from '@/lib/articles';
 import { type FooterTopic, footerSections, footerTopics } from '@/lib/content';
 import { site } from '@/lib/site';
 import { getTopic, topicPath } from '@/lib/topics';
@@ -15,6 +16,12 @@ function topicHref(item: FooterTopic): string {
 
 export function Footer() {
   const year = new Date().getFullYear();
+  // Хаб статей — єдине посилання на кластер з усіх сторінок сайту, тому він у
+  // футері, а не лише в крихтах. Поки чернетки не опубліковані, пункт зникає:
+  // вести з кожної сторінки на порожній список гірше, ніж не вести взагалі.
+  const sections = visibleArticles().length > 0
+    ? [...footerSections, { href: articlesHubPath, label: 'Статті' }]
+    : footerSections;
 
   return (
     <footer className={styles.foot}>
@@ -32,7 +39,7 @@ export function Footer() {
           <nav aria-label="Розділи сайту">
             <h2 className={styles.colTitle}>Розділи</h2>
             <ul>
-              {footerSections.map((item) => (
+              {sections.map((item) => (
                 <li key={item.label}>
                   <a href={item.href}>{item.label}</a>
                 </li>

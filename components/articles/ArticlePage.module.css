@@ -1,0 +1,66 @@
+/* Основна типографіка статті збігається зі сторінкою теми й береться з
+   TopicPage.module.css. Тут лише те, чого в теми немає: підпис автора,
+   картки на хабі та власний відступ під заголовком. */
+
+.meta {
+  margin-bottom: 30px;
+  font-size: 15px;
+  color: var(--olive);
+}
+
+.meta a {
+  border-bottom: 1px solid var(--line);
+  transition: 0.2s;
+}
+
+.meta a:hover {
+  color: var(--clay);
+  border-color: var(--clay);
+}
+
+.meta time {
+  white-space: nowrap;
+}
+
+.cards {
+  display: grid;
+  gap: 26px;
+  list-style: none;
+  margin-top: 40px;
+}
+
+.cards li {
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cards li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.cards h2 {
+  font-size: clamp(21px, 2.2vw, 26px);
+  margin-bottom: 8px;
+}
+
+.cards h2 a {
+  transition: 0.2s;
+}
+
+.cards h2 a:hover {
+  color: var(--clay);
+}
+
+.cards p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--olive);
+}
+
+.cards time {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--olive);
+}

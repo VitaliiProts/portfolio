@@ -1,3 +1,4 @@
+import { articlePath, articlesHubPath, type ArticleDefinition, visibleArticles } from './articles';
 import { faq, plans } from './content';
 import { prices, site } from './site';
 import { tests, testPath, testsHubPath } from './tests';
@@ -191,6 +192,112 @@ export function buildTopicJsonLd(topic: TopicDefinition) {
           acceptedAnswer: { '@type': 'Answer', text: item.answer },
         })),
       },
+    ],
+  };
+}
+
+/**
+ * У статей author і publisher посилаються на той самий @id, що й Person на
+ * головній: без цього мовна модель бачить імʼя автора як рядок і не повʼязує
+ * текст із фахівчинею, чию кваліфікацію описує головна сторінка.
+ *
+ * Теми й тести поки використовують author без @id — коли їх переведуть на
+ * посилання, ці дві функції можна буде перевикористати й там.
+ */
+const kristelRef = { '@id': `${site.url}/#kristel` } as const;
+
+/**
+ * Саме посилання @id у графі не розвʼязується: повний Person лежить на
+ * головній, і сподіватися, що парсер сходить туди сам, не можна. Тому в граф
+ * кожної статті кладемо стислу картку тієї самої сутності — той самий @id,
+ * імʼя, посада й sameAs. Для парсера це один вузол, описаний двічі, а не два
+ * різні автори; докладні дані (освіта, knowsAbout) лишаються на головній.
+ */
+function kristelNode() {
+  return {
+    '@type': 'Person',
+    '@id': `${site.url}/#kristel`,
+    name: site.shortName,
+    jobTitle: site.jobTitle,
+    url: site.url,
+    image: `${site.url}${site.ogImage}`,
+    sameAs: [site.instagramUrl, site.telegramUrl],
+  };
+}
+
+export function buildArticlesHubJsonLd() {
+  const articles = visibleArticles();
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${site.url}${articlesHubPath}#page`,
+        url: `${site.url}${articlesHubPath}`,
+        name: 'Статті психолога',
+        description:
+          'Статті про розлади харчової поведінки, тривожність, привʼязаність і гештальт-терапію від психолога Крістель Кравець.',
+        inLanguage: site.lang,
+        author: kristelRef,
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: articles.map((article, position) => ({
+            '@type': 'ListItem',
+            position: position + 1,
+            name: article.h1,
+            url: `${site.url}${articlePath(article.slug)}`,
+          })),
+        },
+      },
+      breadcrumbs([{ name: 'Статті', path: articlesHubPath }]),
+      kristelNode(),
+    ],
+  };
+}
+
+export function buildArticleJsonLd(article: ArticleDefinition) {
+  const url = `${site.url}${articlePath(article.slug)}`;
+  const about = article.topics
+    .map((slug) => getTopic(slug))
+    .filter((topic) => topic !== undefined)
+    .map((topic) => ({ '@type': 'Thing', name: topic.h1 }));
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: article.h1,
+        description: article.description,
+        url,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${url}#page` },
+        // Дати зберігаються як YYYY-MM-DD — валідний ISO 8601 для schema.org.
+        datePublished: article.publishedAt,
+        dateModified: article.updatedAt,
+        inLanguage: site.lang,
+        author: kristelRef,
+        publisher: kristelRef,
+        image: `${site.url}${site.ogImage}`,
+        // Порожній about — сміття в розмітці, тому поле зʼявляється лише тоді,
+        // коли стаття справді привʼязана до видимих тем.
+        ...(about.length > 0 ? { about } : {}),
+      },
+      breadcrumbs([
+        { name: 'Статті', path: articlesHubPath },
+        { name: article.h1, path: articlePath(article.slug) },
+      ]),
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: article.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      },
+      kristelNode(),
     ],
   };
 }
