@@ -4,7 +4,13 @@ import { attachmentStyles } from './attachment-styles';
 import { bingeEatingVsOvereating } from './binge-eating-vs-overeating';
 import { eatingDisorderLovedOne } from './eating-disorder-loved-one';
 import { eatingDisordersTypesSigns } from './eating-disorders-types-signs';
+import { emotionalEating } from './emotional-eating';
 import { gestaltTherapy } from './gestalt-therapy';
+import { howToChoosePsychologist } from './how-to-choose-psychologist';
+import { intrusiveThoughts } from './intrusive-thoughts';
+import { panicAttackWhatToDo } from './panic-attack-what-to-do';
+import { psychologistPsychotherapistPsychiatrist } from './psychologist-psychotherapist-psychiatrist';
+import { teenAnxiety } from './teen-anxiety';
 import type { ArticleDefinition } from './types';
 
 /** Порядок визначає видачу на хабі, у sitemap і llms.txt. */
@@ -12,10 +18,16 @@ export const articles: readonly ArticleDefinition[] = [
   gestaltTherapy,
   bingeEatingVsOvereating,
   anxietyWhenToGetHelp,
+  panicAttackWhatToDo,
+  intrusiveThoughts,
+  teenAnxiety,
   eatingDisordersTypesSigns,
+  emotionalEating,
   anxiousAttachment,
   attachmentStyles,
   eatingDisorderLovedOne,
+  psychologistPsychotherapistPsychiatrist,
+  howToChoosePsychologist,
 ];
 
 export const articlesHubPath = '/articles';
