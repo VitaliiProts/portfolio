@@ -6,7 +6,7 @@ import { questionsLabel, testPath, tests } from '@/lib/tests';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Психологічні тести онлайн — тривожність, депресія, РХП',
+  title: 'Психологічні тести онлайн — тривога, депресія, РХП',
   description:
     'Сім безкоштовних психологічних тестів: тривожність, депресія, ОКР, стрес, компульсивне переїдання, тип привʼязаності, РХП. Без реєстрації, з поясненням результату.',
   alternates: { canonical: '/tests' },

@@ -12,7 +12,7 @@ import type { ArticleDefinition } from './types';
  */
 export const eatingDisordersTypesSigns: ArticleDefinition = {
   slug: 'eating-disorders-types-signs',
-  title: 'Розлади харчової поведінки: види, ознаки, перший крок',
+  title: 'Розлади харчової поведінки: види й ознаки',
   description:
     'Які бувають розлади харчової поведінки, за якими ознаками їх помічають, чому РХП буває за будь-якої ваги і що робити, якщо ви впізнали себе.',
   h1: 'Розлади харчової поведінки: види, ознаки й перший крок',

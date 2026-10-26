@@ -8,7 +8,7 @@
  * небезпечне — забутий published: true поїхав би в прод разом із чернеткою.
  */
 import { faq as siteFaq, reviewsByTags } from '../lib/content';
-import { sectionIds } from '../lib/site';
+import { maxTitleLength, sectionIds } from '../lib/site';
 import { testSlugs } from '../lib/tests';
 import {
   REQUIRED_SECTION_IDS,
@@ -158,8 +158,8 @@ for (const topic of topics.filter((item) => includeDrafts || item.published)) {
 
   expect(words >= minimum, `${at}: ${words} слів, потрібно ≥ ${minimum}`);
   expect(
-    topic.title.length <= 60,
-    `${at}: title ${topic.title.length} знаків, максимум 60`,
+    topic.title.length <= maxTitleLength,
+    `${at}: title ${topic.title.length} знаків, максимум ${maxTitleLength}`,
   );
   expect(
     topic.description.length <= 155,

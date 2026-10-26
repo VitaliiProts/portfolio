@@ -19,7 +19,7 @@ import {
   REQUIRED_LAST_SECTION_ID,
 } from '../lib/articles';
 import { faq as siteFaq } from '../lib/content';
-import { sectionIds } from '../lib/site';
+import { maxTitleLength, sectionIds } from '../lib/site';
 import { testPath, testSlugs, testsHubPath } from '../lib/tests';
 import { topics } from '../lib/topics';
 
@@ -192,7 +192,10 @@ for (const article of articles.filter((item) => includeDrafts || item.published)
   expect(words >= MIN_WORDS, `${at}: ${words} слів, потрібно ≥ ${MIN_WORDS}`);
   expect(words <= MAX_WORDS, `${at}: ${words} слів, максимум ${MAX_WORDS}`);
 
-  expect(article.title.length <= 60, `${at}: title ${article.title.length} знаків, максимум 60`);
+  expect(
+    article.title.length <= maxTitleLength,
+    `${at}: title ${article.title.length} знаків, максимум ${maxTitleLength}`,
+  );
   expect(
     article.description.length >= 140 && article.description.length <= 155,
     `${at}: description ${article.description.length} знаків, потрібно 140–155`,

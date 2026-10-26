@@ -2,6 +2,7 @@
  * Разова перевірка ключів підрахунку: крайні випадки й контрольні приклади
  * з першоджерел. Запуск: npx tsx scripts/check-tests.ts
  */
+import { maxTitleLength } from '../lib/site';
 import { tests } from '../lib/tests';
 import { choicesFor, computeResult } from '../lib/tests/scoring';
 import type { TestDefinition } from '../lib/tests/types';
@@ -29,6 +30,11 @@ for (const test of tests) {
       `${test.slug}/${scale.id}: ${scale.score}..${top?.score} (діапазон шкали ${scale.min}..${scale.max})`,
     );
   }
+}
+
+console.log('\n--- метадані ---');
+for (const test of tests) {
+  check(`${test.slug}: metaTitle ≤ ${maxTitleLength} знаків`, test.metaTitle.length <= maxTitleLength, true);
 }
 
 console.log('\n--- контрольні значення ---');

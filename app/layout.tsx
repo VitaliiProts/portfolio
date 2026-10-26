@@ -9,7 +9,7 @@ import { Header } from '@/components/Header';
 import { ScrollToSection } from '@/components/ScrollToSection';
 import { StickyCta } from '@/components/StickyCta';
 import { TelegramClickTracker } from '@/components/TelegramClickTracker';
-import { site } from '@/lib/site';
+import { site, titleSuffix } from '@/lib/site';
 import './globals.css';
 
 const display = Cormorant_Garamond({
@@ -29,8 +29,8 @@ const body = Jost({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `Психолог з РХП — терапія анорексії, булімії, тривоги | ${site.shortName}`,
-    template: `%s | ${site.shortName}`,
+    default: `Психолог з РХП — анорексія, булімія, тривога${titleSuffix}`,
+    template: `%s${titleSuffix}`,
   },
   description:
     'Психолог з РХП. Терапія анорексії, булімії, переїдання, тривоги та панічних атак. Онлайн і в Києві. Конфіденційно. Відповідь у Telegram.',

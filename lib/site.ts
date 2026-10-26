@@ -76,6 +76,12 @@ export const site = {
   crisisLine: '7333',
 } as const;
 
+/** Суфікс, який шаблон title у layout додає до заголовка кожної сторінки. */
+export const titleSuffix = ` | ${site.shortName}`;
+
+/** Bing позначає title, довші за 70 знаків, як задовгі — рахуючи разом із суфіксом. */
+export const maxTitleLength = 70 - titleSuffix.length;
+
 export const prices = {
   individual: 1600,
   eatingDisorder: 1600,
