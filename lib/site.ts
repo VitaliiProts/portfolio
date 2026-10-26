@@ -73,6 +73,7 @@ export const site = {
   telegramHandle: 'Krav_Kristel',
   telegramUrl: 'https://t.me/Krav_Kristel',
   instagramUrl: 'https://www.instagram.com/psy_kristel',
+  crisisLine: '7333',
 } as const;
 
 export const prices = {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { site } from '@/lib/site';
 import styles from './Privacy.module.css';
 
 export function Privacy() {
@@ -26,6 +27,10 @@ export function Privacy() {
           Тести в розділі <Link href="/tests">«Тести»</Link> анонімні: відповіді рахуються у вашому
           браузері, не зберігаються й нікуди не надсилаються. Це скринінгові опитувальники, а не
           діагноз.
+        </p>
+        <p className={styles.text}>
+          Якщо стан гострий і потрібна негайна допомога — лінія {site.crisisLine} (безкоштовно,
+          цілодобово). Я не замінюю невідкладну медичну чи психіатричну допомогу.
         </p>
       </div>
     </section>

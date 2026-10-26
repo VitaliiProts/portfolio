@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { testPath, testsHubPath } from '@/lib/tests/format';
 import type { ScaleResult, TestDefinition, TestResult as Result } from '@/lib/tests/types';
-import { telegramLink } from '@/lib/site';
+import { site, telegramLink } from '@/lib/site';
 import { TelegramLink } from '../TelegramLink';
 import styles from './Test.module.css';
 
@@ -74,6 +74,16 @@ export function TestResult({ test, result, related, onRestart }: Props) {
         {test.title}
         <span className="dot">.</span>
       </h2>
+
+      {result.crisis && (
+        <div className={styles.crisis} role="note">
+          <b>Якщо зараз важко — не залишайтеся з цим наодинці.</b> Ви відзначили відповідь, яка
+          вимагає уваги вже сьогодні. Лінія запобігання самогубствам —{' '}
+          <a href={`tel:${site.crisisLine}`}>{site.crisisLine}</a>, безкоштовно й цілодобово. Якщо
+          стан гострий, зверніться по невідкладну допомогу: <a href="tel:103">103</a> або{' '}
+          <a href="tel:112">112</a>.
+        </div>
+      )}
 
       <div className={styles.scales}>
         {result.scales.map((scale) => (

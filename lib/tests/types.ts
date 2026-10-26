@@ -14,8 +14,11 @@ export type Question = {
   choices?: readonly Choice[];
   /** Зворотний підрахунок: `min + max - value`. */
   reverse?: boolean;
-  /** Питання поза балом, яке впливає на результат: поведінкові маркери РХП. */
-  flag?: 'behavior';
+  /**
+   * Питання поза балом, яке впливає на результат:
+   * `crisis` — думки про самоушкодження, `behavior` — поведінкові маркери РХП.
+   */
+  flag?: 'crisis' | 'behavior';
 };
 
 /** Тон діапазону задає колір і тональність тексту на екрані результату. */
@@ -76,6 +79,8 @@ export type TestDefinition = {
   quadrant?: QuadrantRule;
   /** Текст блоку поведінкових маркерів (питання з `flag: 'behavior'`). */
   behaviorNote?: string;
+  /** Показувати кризовий блок, коли результат потрапив у найтяжчий діапазон. */
+  crisisOnAlert?: boolean;
 };
 
 export type ScaleResult = {
@@ -91,6 +96,8 @@ export type ScaleResult = {
 
 export type TestResult = {
   scales: readonly ScaleResult[];
+  /** Спрацював кризовий маркер — показуємо блок із лінією підтримки. */
+  crisis: boolean;
   /** Спрацював хоча б один поведінковий маркер. */
   behavior: boolean;
   style?: { label: string; text: string };
