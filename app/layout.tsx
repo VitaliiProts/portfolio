@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
+import { Cormorant_Garamond } from 'next/font/google';
+import { Jost } from 'next/font/google';
 import { Amplitude } from '@/components/Amplitude';
 import { CrisisBar } from '@/components/CrisisBar';
 import { Footer } from '@/components/Footer';
