@@ -3,8 +3,15 @@ import { anxiousAttachment } from './anxious-attachment';
 import { attachmentStyles } from './attachment-styles';
 import { bingeEatingVsOvereating } from './binge-eating-vs-overeating';
 import { eatingDisorderLovedOne } from './eating-disorder-loved-one';
+import { anorexiaConsequences } from './anorexia-consequences';
+import { anorexiaInTeens } from './anorexia-in-teens';
+import { atypicalAnorexia } from './atypical-anorexia';
+import { bulimiaSignsCauses } from './bulimia-signs-causes';
+import { eatingDisorderRelapse } from './eating-disorder-relapse';
 import { eatingDisordersTypesSigns } from './eating-disorders-types-signs';
 import { emotionalEating } from './emotional-eating';
+import { eveningOvereating } from './evening-overeating';
+import { howToStopBulimia } from './how-to-stop-bulimia';
 import { gestaltTherapy } from './gestalt-therapy';
 import { howToChoosePsychologist } from './how-to-choose-psychologist';
 import { intrusiveThoughts } from './intrusive-thoughts';
@@ -22,7 +29,14 @@ export const articles: readonly ArticleDefinition[] = [
   intrusiveThoughts,
   teenAnxiety,
   eatingDisordersTypesSigns,
+  bulimiaSignsCauses,
+  howToStopBulimia,
+  anorexiaInTeens,
+  atypicalAnorexia,
+  anorexiaConsequences,
   emotionalEating,
+  eveningOvereating,
+  eatingDisorderRelapse,
   anxiousAttachment,
   attachmentStyles,
   eatingDisorderLovedOne,
